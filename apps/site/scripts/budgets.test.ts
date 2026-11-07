@@ -21,3 +21,20 @@ test("files without a budget are ignored", () => {
 	const files = [{ file: "photo.avif", data: randomBytes(4096) }];
 	assert.deepEqual(overBudget(files, list), []);
 });
+
+test("a budget that asks for some text applies only to files that have it", () => {
+	const strict = [
+		{ pattern: /\.js$/, has: /special/, label: "special", maxGzipBytes: 10 },
+		{ pattern: /\.js$/, label: "JavaScript", maxGzipBytes: 100_000 },
+	];
+	const text = (s: string) => new TextEncoder().encode(s.repeat(50));
+	const files = [
+		{ file: "a.js", data: text("special thing. ") },
+		{ file: "b.js", data: text("another thing. ") },
+	];
+	const found = overBudget(files, strict);
+	assert.deepEqual(
+		found.map((f) => [f.file, f.label]),
+		[["a.js", "special"]],
+	);
+});
