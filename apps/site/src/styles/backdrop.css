@@ -34,6 +34,37 @@
 	);
 }
 
+/* the static drawing of the field: shown without scripts, or when the live field cannot run (the page adds .poster-on) */
+.poster {
+	position: absolute;
+	inset: 0;
+	display: none;
+
+	/* the drawing is not laid out around the text, so it thins behind it */
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(
+			34% 40% at 50% 66%,
+			rgb(16 36 58 / 0.9) 0%,
+			rgb(16 36 58 / 0.72) 55%,
+			rgb(16 36 58 / 0) 100%
+		);
+	}
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
+
+html:not(.js) .poster,
+html.poster-on .poster {
+	display: block;
+}
+
 /* one tile taller than the window, so it can move by a whole tile and wrap without a seam */
 .datum {
 	position: absolute;
