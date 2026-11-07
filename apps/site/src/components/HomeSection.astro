@@ -1,0 +1,102 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+
+interface Props {
+	entry: CollectionEntry<"home">;
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+const number = String(data.order).padStart(2, "0");
+const split = data.layout === "split" || data.layout === "split-reverse";
+const eyebrow = data.eyebrow ? `${number} · ${data.eyebrow}` : undefined;
+---
+
+<section class:list={["sec", data.layout === "band" && "band", data.layout === "get" && "get"]} id={data.anchor}>
+	{
+		split && (
+			<div class:list={["wrap", "split", data.layout === "split-reverse" && "rev"]}>
+				<div class="copy">
+					{eyebrow && <p class="eyebrow">{eyebrow}</p>}
+					<h2>{data.title}</h2>
+					<div class="lede"><Content /></div>
+					{data.link && (
+						<a class="more-link" href={data.link.href}>
+							{data.link.label} <span aria-hidden="true">→</span>
+						</a>
+					)}
+				</div>
+				{data.stage && (
+					<div class="stage" data-stage={data.stage.kind}>
+						<b>{data.stage.label}</b>
+						<span>{data.stage.text}</span>
+					</div>
+				)}
+			</div>
+		)
+	}
+	{
+		data.layout === "stacked" && (
+			<div class="wrap">
+				<div class="head">
+					{eyebrow && <p class="eyebrow">{eyebrow}</p>}
+					<h2>{data.title}</h2>
+					<div class="lede"><Content /></div>
+				</div>
+				{data.stage && (
+					<div class:list={["stage", data.stage.wide && "wide"]} data-stage={data.stage.kind}>
+						<b>{data.stage.label}</b>
+						<span>{data.stage.text}</span>
+					</div>
+				)}
+				{data.facts && <ul class="facts">{data.facts.map((fact) => <li>{fact}</li>)}</ul>}
+				{data.cards && (
+					<div class="cards">
+						{data.cards.map((card) => (
+							<article class="card">
+								<div class="thumb"><b>Image</b></div>
+								<h3>{card.title}</h3>
+								<p>{card.text}</p>
+							</article>
+						))}
+					</div>
+				)}
+				{data.link && (
+					<a class="more-link" href={data.link.href}>
+						{data.link.label} <span aria-hidden="true">→</span>
+					</a>
+				)}
+			</div>
+		)
+	}
+	{
+		data.layout === "band" && (
+			<div class="wrap">
+				{eyebrow && <p class="eyebrow">{eyebrow}</p>}
+				<h2>{data.title}</h2>
+				<div class="lede"><Content /></div>
+				{data.chips && <ul class="chips">{data.chips.map((chip) => <li>{chip}</li>)}</ul>}
+				{data.actions && (
+					<div class="actions">
+						{data.actions.map((a) => <a class="btn" href={a.href}>{a.label}</a>)}
+					</div>
+				)}
+			</div>
+		)
+	}
+	{
+		data.layout === "get" && (
+			<div class="wrap">
+				<h2>{data.title}</h2>
+				{data.actions && (
+					<div class="actions">
+						{data.actions.map((a) => <a class:list={["btn", a.primary && "primary"]} href={a.href}>{a.label}</a>)}
+					</div>
+				)}
+				<div class="small"><Content /></div>
+			</div>
+		)
+	}
+</section>

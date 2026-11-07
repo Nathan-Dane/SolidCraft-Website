@@ -8,3 +8,4 @@
 @import "./hero.css" layer(components);
 @import "./backdrop.css" layer(layout);
 @import "./release.css" layer(components);
+@import "./sections.css" layer(layout);
