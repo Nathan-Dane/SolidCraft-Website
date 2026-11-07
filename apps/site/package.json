@@ -10,7 +10,7 @@
 		"typecheck": "astro check",
 		"test:e2e": "playwright test",
 		"check:output": "node scripts/check-output.ts",
-		"test": "node --test scripts/*.test.ts"
+		"test": "node --test scripts/*.test.ts src/lib/*.test.ts"
 	},
 	"dependencies": {
 		"@solidcraft/tokens": "workspace:*",
