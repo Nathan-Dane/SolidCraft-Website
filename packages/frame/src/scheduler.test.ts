@@ -142,3 +142,93 @@ test("a task can wake itself from inside a frame by returning nothing", () => {
 	assert.equal(runs, 2);
 	assert.equal(fake.pending, 1);
 });
+
+// run for one second of 60 Hz frames and count how often a task ran
+function runsPerSecond(
+	rate: "frame" | "policy",
+	prepare: (s: ReturnType<typeof createScheduler>) => void,
+): number {
+	const fake = fakeEnv();
+	const scheduler = createScheduler(fake.env);
+	let runs = 0;
+	scheduler.add({ phase: "simulate", rate, run: () => void runs++ });
+	prepare(scheduler);
+	for (let i = 0; i < 60; i++) fake.step(1000 / 60);
+	return runs;
+}
+
+test("a policy task runs about 20 times a second when the visitor is idle", () => {
+	const n = runsPerSecond("policy", () => {});
+	assert.ok(n >= 19 && n <= 21, `ran ${n} times`);
+});
+
+test("a policy task runs about 30 times a second while the visitor is active", () => {
+	const n = runsPerSecond("policy", (s) => s.poke());
+	assert.ok(n >= 29 && n <= 31, `ran ${n} times`);
+});
+
+test("a policy task runs every frame while the page scrolls", () => {
+	const n = runsPerSecond("policy", (s) => {
+		s.poke();
+		s.scroll();
+	});
+	// scrolling holds for 160 ms, then the active rate takes over
+	assert.ok(n >= 32 && n <= 42, `ran ${n} times`);
+});
+
+test("a frame task is not slowed by the policy", () => {
+	assert.equal(
+		runsPerSecond("frame", () => {}),
+		60,
+	);
+});
+
+test("activity wears off: the pace returns to idle after the hold", () => {
+	const fake = fakeEnv();
+	const scheduler = createScheduler(fake.env);
+	scheduler.poke();
+	assert.equal(scheduler.mode, "active");
+	fake.step(2001);
+	assert.equal(scheduler.mode, "idle");
+	scheduler.scroll();
+	assert.equal(scheduler.mode, "scroll");
+});
+
+test("a hidden tab runs nothing and requests no frame, and resumes when shown", () => {
+	const fake = fakeEnv();
+	const scheduler = createScheduler(fake.env);
+	let runs = 0;
+	scheduler.add({ phase: "read", run: () => void runs++ });
+	fake.step();
+	scheduler.setHidden(true);
+	assert.equal(fake.pending, 0);
+	assert.equal(runs, 1);
+	scheduler.setHidden(false);
+	assert.equal(fake.pending, 1);
+	fake.step();
+	assert.equal(runs, 2);
+});
+
+test("a task that is not visible is not run and keeps no frames going", () => {
+	const fake = fakeEnv();
+	const scheduler = createScheduler(fake.env);
+	let runs = 0;
+	const task = scheduler.add({ phase: "read", run: () => void runs++ });
+	task.setVisible(false);
+	assert.equal(fake.pending, 0);
+	task.setVisible(true);
+	assert.equal(fake.pending, 1);
+	fake.step();
+	assert.equal(runs, 1);
+});
+
+test("other tasks keep running while one is not visible", () => {
+	const fake = fakeEnv();
+	const scheduler = createScheduler(fake.env);
+	const log: string[] = [];
+	const hidden = scheduler.add({ phase: "read", run: () => void log.push("hidden") });
+	scheduler.add({ phase: "write", run: () => void log.push("shown") });
+	hidden.setVisible(false);
+	fake.step();
+	assert.deepEqual(log, ["shown"]);
+});
