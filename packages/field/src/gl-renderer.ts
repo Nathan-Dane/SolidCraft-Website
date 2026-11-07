@@ -13,6 +13,8 @@ import type { View } from "./types.ts";
 export type RendererOptions = {
 	/** The highest device-pixel ratio drawn at (default 2). */
 	maxDpr?: number;
+	/** Accept a software renderer too (it is refused by default: a slow backdrop is worse than the poster). */
+	allowSoftware?: boolean;
 };
 
 export type GLRenderer = {
@@ -91,7 +93,7 @@ export function createGLRenderer(
 		depth: false,
 		stencil: false,
 		powerPreference: "low-power", // a quiet backdrop does not need the discrete GPU
-		failIfMajorPerformanceCaveat: true,
+		failIfMajorPerformanceCaveat: !opts.allowSoftware,
 	};
 	let gl: WebGLRenderingContext | null = null;
 	try {
