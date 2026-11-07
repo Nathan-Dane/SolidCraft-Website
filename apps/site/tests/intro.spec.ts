@@ -6,6 +6,9 @@ const STAGES = ["i-datum", "i-logo", "i-pills", "i-title", "i-bar", "i-tag", "i-
 
 test.skip(({ isMobile }) => isMobile, "the entrance is checked at desktop size");
 test.use({ viewport: { width: 1440, height: 900 } });
+test.beforeEach(({ context }) =>
+	context.route("https://api.github.com/**", (route) => route.abort()),
+);
 
 const host = "window.fieldHost";
 
