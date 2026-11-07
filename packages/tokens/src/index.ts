@@ -1,1 +1,32 @@
-export {};
+export const tokenNames = [
+	"--ink-950",
+	"--ink-900",
+	"--ink-850",
+	"--text",
+	"--text-strong",
+	"--text-soft",
+	"--text-mid",
+	"--muted",
+	"--cool",
+	"--line",
+	"--line-dim",
+	"--border",
+	"--accent",
+	"--action-top",
+	"--action",
+	"--action-bottom",
+	"--action-border",
+	"--warn",
+	"--focus",
+	"--font-display",
+	"--font-sans",
+	"--font-mono",
+	"--text-min",
+	"--u",
+	"--ut",
+	"--bar-height",
+	"--gutter",
+	"--radius-pill",
+] as const;
+
+export type TokenName = (typeof tokenNames)[number];

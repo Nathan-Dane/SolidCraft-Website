@@ -4,10 +4,14 @@
 	"private": true,
 	"type": "module",
 	"exports": {
-		".": "./src/index.ts"
+		".": "./src/index.ts",
+		"./tokens.css": "./src/tokens.css"
 	},
 	"scripts": {
 		"typecheck": "tsc --noEmit",
-		"test": "node --test"
+		"test": "node --test src/*.test.ts"
+	},
+	"devDependencies": {
+		"@types/node": "^24.19.2"
 	}
 }
