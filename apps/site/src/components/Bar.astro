@@ -1,6 +1,8 @@
 ---
 import { nav, site } from "../data/site";
 import Logo from "./Logo.astro";
+
+const here = Astro.url.pathname;
 ---
 
 <header class="bar">
@@ -9,7 +11,7 @@ import Logo from "./Logo.astro";
 		<span>SolidCraft</span>
 	</a>
 	<nav aria-label="Primary">
-		{nav.map((item) => <a href={item.href}>{item.label}</a>)}
+		{nav.map((item) => <a href={item.href} aria-current={item.href === here ? "page" : undefined}>{item.label}</a>)}
 	</nav>
 	<div class="right">
 		<a class="ico" href={site.github} aria-label="SolidCraft on GitHub">
