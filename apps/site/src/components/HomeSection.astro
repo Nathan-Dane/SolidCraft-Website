@@ -23,7 +23,7 @@ const eyebrow = data.eyebrow ? `${number} · ${data.eyebrow}` : undefined;
 					<h2 class="rv">{data.title}</h2>
 					<div class="lede rv"><Content /></div>
 					{data.link && (
-						<a class="more-link rv" href={data.link.href}>
+						<a class="more-link rv" href={data.link.href} data-focus>
 							{data.link.label} <span aria-hidden="true">→</span>
 						</a>
 					)}
@@ -64,7 +64,7 @@ const eyebrow = data.eyebrow ? `${number} · ${data.eyebrow}` : undefined;
 					</div>
 				)}
 				{data.link && (
-					<a class="more-link rv" href={data.link.href}>
+					<a class="more-link rv" href={data.link.href} data-focus>
 						{data.link.label} <span aria-hidden="true">→</span>
 					</a>
 				)}
@@ -80,7 +80,7 @@ const eyebrow = data.eyebrow ? `${number} · ${data.eyebrow}` : undefined;
 				{data.chips && <ul class="chips rv">{data.chips.map((chip) => <li>{chip}</li>)}</ul>}
 				{data.actions && (
 					<div class="actions rv">
-						{data.actions.map((a) => <a class="btn" href={a.href}>{a.label}</a>)}
+						{data.actions.map((a) => <a class="btn" href={a.href} data-focus>{a.label}</a>)}
 					</div>
 				)}
 			</div>
@@ -92,7 +92,7 @@ const eyebrow = data.eyebrow ? `${number} · ${data.eyebrow}` : undefined;
 				<h2 class="rv">{data.title}</h2>
 				{data.actions && (
 					<div class="actions rv">
-						{data.actions.map((a) => <a class:list={["btn", a.primary && "primary"]} href={a.href}>{a.label}</a>)}
+						{data.actions.map((a) => <a class:list={["btn", a.primary && "primary"]} href={a.href} data-focus>{a.label}</a>)}
 					</div>
 				)}
 				<div class="small rv"><Content /></div>

@@ -9,7 +9,7 @@ import { footer } from "../data/site";
 				footer.map((column) => (
 					<div>
 						<h2>{column.title}</h2>
-						{column.links.map((link) => <a href={link.href}>{link.label}</a>)}
+						{column.links.map((link) => <a href={link.href} data-focus>{link.label}</a>)}
 					</div>
 				))
 			}

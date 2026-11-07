@@ -10,6 +10,7 @@
 @import "./release.css" layer(components);
 @import "./satellites.css" layer(components);
 @import "./sections.css" layer(layout);
+@import "./cursor.css" layer(components);
 @import "./footer.css" layer(components);
 @import "./pages.css" layer(layout);
 @import "./motion.css" layer(motion);

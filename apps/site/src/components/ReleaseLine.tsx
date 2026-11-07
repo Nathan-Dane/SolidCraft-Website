@@ -101,12 +101,13 @@ export default function ReleaseLine() {
 	return (
 		<div class="statusblock" data-quiet>
 			<div class="meta status" data-ch={channel}>
-				<a class="ver" id="ver" href={line.href}>
+				<a class="ver" id="ver" href={line.href} data-focus>
 					<i class="dot" />
 					<span>{line.text}</span>
 				</a>
 				<button
 					class="switch"
+					data-focus
 					type="button"
 					role="switch"
 					aria-checked={channel === "pre"}
@@ -119,6 +120,7 @@ export default function ReleaseLine() {
 				</button>
 				<button
 					class="more"
+					data-focus
 					type="button"
 					id="more"
 					aria-expanded={open}
@@ -143,7 +145,7 @@ export default function ReleaseLine() {
 				<div class="mm-label">Latest build for</div>
 				<nav class="plats" aria-label="Latest build for">
 					{platforms.map((p) => (
-						<a key={p.id} href={linkFor(release, p.id)} data-plat={p.id}>
+						<a key={p.id} href={linkFor(release, p.id)} data-plat={p.id} data-focus>
 							<svg
 								viewBox="0 0 24 24"
 								fill="none"

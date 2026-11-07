@@ -14,6 +14,7 @@
 	},
 	"dependencies": {
 		"@astrojs/preact": "6.1.2",
+		"@solidcraft/cursor": "workspace:*",
 		"@solidcraft/field": "workspace:*",
 		"@solidcraft/frame": "workspace:*",
 		"@solidcraft/tokens": "workspace:*",

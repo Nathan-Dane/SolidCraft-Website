@@ -21,6 +21,9 @@
 	.ver {
 		display: inline-flex;
 		align-items: center;
+		padding: 6px 10px;
+		margin: -6px -10px; /* room for the cursor's ring; the layout is as before */
+		border-radius: 10px;
 		border-bottom: 1px solid transparent;
 		color: var(--text);
 		text-decoration: none;
@@ -61,7 +64,9 @@
 	display: inline-flex;
 	align-items: center;
 	gap: 0.35em;
-	padding: 0;
+	padding: 6px 10px;
+	margin: -6px -10px;
+	border-radius: 10px;
 	border: 0;
 	border-bottom: 1px solid transparent;
 	background: none;
@@ -127,7 +132,9 @@
 	display: inline-flex;
 	align-items: center;
 	gap: calc(var(--ut) * 0.7);
-	padding: 0;
+	padding: 6px 10px;
+	margin: -6px -10px;
+	border-radius: 10px;
 	border: 0;
 	background: none;
 	color: var(--cool);
