@@ -1,0 +1,27 @@
+:root {
+	color-scheme: dark;
+}
+
+html {
+	background: var(--ink-900);
+	scroll-behavior: smooth;
+	scroll-padding-top: var(--bar-height);
+}
+
+body {
+	background: var(--ink-900);
+	color: var(--text);
+	font-family: var(--font-sans);
+}
+
+:where(a, button):focus-visible {
+	outline: 2px solid var(--focus);
+	outline-offset: 3px;
+	border-radius: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
