@@ -19,17 +19,17 @@ const eyebrow = data.eyebrow ? `${number} · ${data.eyebrow}` : undefined;
 		split && (
 			<div class:list={["wrap", "split", data.layout === "split-reverse" && "rev"]}>
 				<div class="copy">
-					{eyebrow && <p class="eyebrow">{eyebrow}</p>}
-					<h2>{data.title}</h2>
-					<div class="lede"><Content /></div>
+					{eyebrow && <p class="eyebrow rv">{eyebrow}</p>}
+					<h2 class="rv">{data.title}</h2>
+					<div class="lede rv"><Content /></div>
 					{data.link && (
-						<a class="more-link" href={data.link.href}>
+						<a class="more-link rv" href={data.link.href}>
 							{data.link.label} <span aria-hidden="true">→</span>
 						</a>
 					)}
 				</div>
 				{data.stage && (
-					<div class="stage" data-stage={data.stage.kind}>
+					<div class="stage rv" data-stage={data.stage.kind}>
 						<b>{data.stage.label}</b>
 						<span>{data.stage.text}</span>
 					</div>
@@ -41,21 +41,21 @@ const eyebrow = data.eyebrow ? `${number} · ${data.eyebrow}` : undefined;
 		data.layout === "stacked" && (
 			<div class="wrap">
 				<div class="head">
-					{eyebrow && <p class="eyebrow">{eyebrow}</p>}
-					<h2>{data.title}</h2>
-					<div class="lede"><Content /></div>
+					{eyebrow && <p class="eyebrow rv">{eyebrow}</p>}
+					<h2 class="rv">{data.title}</h2>
+					<div class="lede rv"><Content /></div>
 				</div>
 				{data.stage && (
-					<div class:list={["stage", data.stage.wide && "wide"]} data-stage={data.stage.kind}>
+					<div class:list={["stage", "rv", data.stage.wide && "wide"]} data-stage={data.stage.kind}>
 						<b>{data.stage.label}</b>
 						<span>{data.stage.text}</span>
 					</div>
 				)}
-				{data.facts && <ul class="facts">{data.facts.map((fact) => <li>{fact}</li>)}</ul>}
+				{data.facts && <ul class="facts rv">{data.facts.map((fact) => <li>{fact}</li>)}</ul>}
 				{data.cards && (
 					<div class="cards">
 						{data.cards.map((card) => (
-							<article class="card">
+							<article class="card rv">
 								<div class="thumb"><b>Image</b></div>
 								<h3>{card.title}</h3>
 								<p>{card.text}</p>
@@ -64,7 +64,7 @@ const eyebrow = data.eyebrow ? `${number} · ${data.eyebrow}` : undefined;
 					</div>
 				)}
 				{data.link && (
-					<a class="more-link" href={data.link.href}>
+					<a class="more-link rv" href={data.link.href}>
 						{data.link.label} <span aria-hidden="true">→</span>
 					</a>
 				)}
@@ -74,12 +74,12 @@ const eyebrow = data.eyebrow ? `${number} · ${data.eyebrow}` : undefined;
 	{
 		data.layout === "band" && (
 			<div class="wrap">
-				{eyebrow && <p class="eyebrow">{eyebrow}</p>}
-				<h2>{data.title}</h2>
-				<div class="lede"><Content /></div>
-				{data.chips && <ul class="chips">{data.chips.map((chip) => <li>{chip}</li>)}</ul>}
+				{eyebrow && <p class="eyebrow rv">{eyebrow}</p>}
+				<h2 class="rv">{data.title}</h2>
+				<div class="lede rv"><Content /></div>
+				{data.chips && <ul class="chips rv">{data.chips.map((chip) => <li>{chip}</li>)}</ul>}
 				{data.actions && (
-					<div class="actions">
+					<div class="actions rv">
 						{data.actions.map((a) => <a class="btn" href={a.href}>{a.label}</a>)}
 					</div>
 				)}
@@ -89,13 +89,13 @@ const eyebrow = data.eyebrow ? `${number} · ${data.eyebrow}` : undefined;
 	{
 		data.layout === "get" && (
 			<div class="wrap">
-				<h2>{data.title}</h2>
+				<h2 class="rv">{data.title}</h2>
 				{data.actions && (
-					<div class="actions">
+					<div class="actions rv">
 						{data.actions.map((a) => <a class:list={["btn", a.primary && "primary"]} href={a.href}>{a.label}</a>)}
 					</div>
 				)}
-				<div class="small"><Content /></div>
+				<div class="small rv"><Content /></div>
 			</div>
 		)
 	}

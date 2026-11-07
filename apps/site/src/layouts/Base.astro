@@ -43,6 +43,7 @@ const data = {
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonical} />
 		<script type="application/ld+json" set:html={JSON.stringify(data)} />
+		<script is:inline>document.documentElement.classList.add("js");</script>
 		<title>{title}</title>
 	</head>
 	<body>
@@ -51,5 +52,8 @@ const data = {
 		<Backdrop />
 		<Bar />
 		<slot />
+		<script>
+			import "../scripts/reveal";
+		</script>
 	</body>
 </html>
