@@ -7,6 +7,7 @@ export * from "./glyphs.ts";
 export * from "./governor.ts";
 export * from "./hero.ts";
 export * from "./host.ts";
+export * from "./intro.ts";
 export * from "./layout.ts";
 export * from "./math.ts";
 export * from "./palette.ts";
