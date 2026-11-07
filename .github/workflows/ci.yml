@@ -19,5 +19,6 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build
+      - run: pnpm --filter @solidcraft/site check:output
       - run: pnpm --filter @solidcraft/site exec playwright install --with-deps chromium
       - run: pnpm test:e2e
