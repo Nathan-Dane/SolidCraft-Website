@@ -214,6 +214,10 @@ importers:
   packages/cursor: {}
 
   packages/field:
+    dependencies:
+      '@solidcraft/frame':
+        specifier: workspace:*
+        version: link:../frame
     devDependencies:
       '@types/node':
         specifier: ^24.19.2
