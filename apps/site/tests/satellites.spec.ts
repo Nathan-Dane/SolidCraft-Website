@@ -1,6 +1,21 @@
 import { expect, test } from "@playwright/test";
 
 test("the four satellites link to pages and are not shown without the field", async ({ page }) => {
+	await page.addInitScript(() => {
+		const original = HTMLCanvasElement.prototype.getContext;
+		HTMLCanvasElement.prototype.getContext = function (
+			this: HTMLCanvasElement,
+			type: string,
+			...rest: unknown[]
+		) {
+			if (type.includes("webgl")) return null;
+			return (original as (t: string, ...r: unknown[]) => unknown).call(
+				this,
+				type,
+				...rest,
+			) as never;
+		} as typeof original;
+	});
 	await page.goto("/");
 	const links = await page.$$eval(".sat", (els) =>
 		els.map((e) => [

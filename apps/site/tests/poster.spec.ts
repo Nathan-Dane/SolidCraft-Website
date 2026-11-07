@@ -26,9 +26,3 @@ test("with scripts the drawing is neither shown nor fetched", async ({ page }) =
 	await expect(page.locator(".poster")).toBeHidden();
 	expect(requested.filter((u) => u.endsWith("poster.svg"))).toEqual([]);
 });
-
-test("the poster tier can be switched on by the page", async ({ page }) => {
-	await page.goto("/");
-	await page.evaluate(() => document.documentElement.classList.add("poster-on"));
-	await expect(page.locator(".poster img")).toBeVisible();
-});

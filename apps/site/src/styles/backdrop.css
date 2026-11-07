@@ -34,6 +34,25 @@
 	);
 }
 
+/* the field's canvas: shown once the field runs, hidden while it is parked (every node has left the window) */
+.field-canvas {
+	position: absolute;
+	inset: 0;
+	display: none;
+	width: 100%;
+	height: 100%;
+	touch-action: pan-y;
+	user-select: none;
+}
+
+.backdrop.live .field-canvas {
+	display: block;
+}
+
+.backdrop.parked .field-canvas {
+	visibility: hidden;
+}
+
 /* the static drawing of the field: shown without scripts, or when the live field cannot run (the page adds .poster-on) */
 .poster {
 	position: absolute;
