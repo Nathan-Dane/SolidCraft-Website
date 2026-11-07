@@ -61,3 +61,84 @@ test("a task removed during a frame does not run again that frame", () => {
 	fake.step();
 	assert.deepEqual(log, ["first"]);
 });
+
+test("a task that sleeps leaves the loop, and no frames are requested when all are asleep", () => {
+	const fake = fakeEnv();
+	const scheduler = createScheduler(fake.env);
+	let runs = 0;
+	scheduler.add({
+		phase: "write",
+		run: () => {
+			runs++;
+			return "sleep";
+		},
+	});
+	fake.step();
+	assert.equal(runs, 1);
+	assert.equal(fake.pending, 0);
+	assert.equal(fake.step(), false);
+});
+
+test("waking a sleeping task starts the frames again", () => {
+	const fake = fakeEnv();
+	const scheduler = createScheduler(fake.env);
+	let runs = 0;
+	const task = scheduler.add({
+		phase: "write",
+		run: () => {
+			runs++;
+			return "sleep";
+		},
+	});
+	fake.step();
+	task.wake();
+	assert.equal(fake.pending, 1);
+	fake.step();
+	assert.equal(runs, 2);
+	assert.equal(fake.pending, 0);
+});
+
+test("a sleeping task does not hold the loop for the others", () => {
+	const fake = fakeEnv();
+	const scheduler = createScheduler(fake.env);
+	const log: string[] = [];
+	scheduler.add({
+		phase: "read",
+		run: () => {
+			log.push("sleeper");
+			return "sleep";
+		},
+	});
+	scheduler.add({ phase: "write", run: () => void log.push("busy") });
+	fake.step();
+	fake.step();
+	assert.deepEqual(log, ["sleeper", "busy", "busy"]);
+});
+
+test("after a sleep the first frame does not see the whole sleep as elapsed time", () => {
+	const fake = fakeEnv();
+	const scheduler = createScheduler(fake.env);
+	const seen: number[] = [];
+	const task = scheduler.add({
+		phase: "simulate",
+		run: (f) => {
+			seen.push(f.dt);
+			return "sleep";
+		},
+	});
+	fake.step(16);
+	task.wake();
+	fake.step(5000);
+	assert.equal(seen[1], 0);
+});
+
+test("a task can wake itself from inside a frame by returning nothing", () => {
+	const fake = fakeEnv();
+	const scheduler = createScheduler(fake.env);
+	let runs = 0;
+	scheduler.add({ phase: "read", run: () => void runs++ });
+	fake.step();
+	fake.step();
+	assert.equal(runs, 2);
+	assert.equal(fake.pending, 1);
+});
