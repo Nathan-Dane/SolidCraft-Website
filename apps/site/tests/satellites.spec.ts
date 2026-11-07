@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 test("the four satellites link to pages and are not shown without the field", async ({ page }) => {
 	await page.addInitScript(() => {

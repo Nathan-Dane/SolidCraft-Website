@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 test("the backdrop is fixed behind the page and ignores the pointer", async ({ page }) => {
 	await page.setViewportSize({ width: 1440, height: 900 });

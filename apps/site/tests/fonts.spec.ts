@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 test("the three preloaded fonts are served", async ({ page, request }) => {
 	await page.goto("/");

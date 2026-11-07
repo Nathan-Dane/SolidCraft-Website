@@ -1,4 +1,4 @@
-import { expect, type Page, test } from "@playwright/test";
+import { expect, type Page, test } from "./base";
 
 // Chromium supports scroll-driven animations; pretend it does not, so the page runs the scheduler path
 test.beforeEach(async ({ page }) => {

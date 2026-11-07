@@ -1,0 +1,100 @@
+/* The entrance (packages/field/src/intro.ts): while html.intro is set, the page shows only its colour and each part is revealed by
+   a class the entrance adds (.i-*). Only opacity and the independent scale and translate properties are used, so nothing fights the
+   cursor's own transforms; the satellites appear as their nodes are drawn (.shown). */
+.intro {
+	.datum,
+	.datum-glow {
+		transition: opacity 1.2s ease;
+	}
+
+	&:not(.i-datum) {
+		.datum,
+		.datum-glow {
+			opacity: 0;
+		}
+	}
+
+	.node-logo svg {
+		transition:
+			opacity 0.6s ease,
+			scale 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+	}
+
+	&:not(.i-logo) .node-logo svg {
+		opacity: 0;
+		scale: 0.9;
+	}
+
+	.pill {
+		transition:
+			opacity 0.6s ease,
+			box-shadow 0.25s;
+	}
+
+	&:not(.i-pills) .pill {
+		opacity: 0;
+	}
+
+	h1,
+	.by,
+	.tag,
+	.statusblock {
+		transition:
+			opacity 0.6s ease,
+			translate 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+	}
+
+	&:not(.i-title) {
+		h1,
+		.by {
+			opacity: 0;
+			translate: 0 12px;
+		}
+	}
+
+	&:not(.i-tag) .tag {
+		opacity: 0;
+		translate: 0 12px;
+	}
+
+	&:not(.i-meta) .statusblock {
+		opacity: 0;
+		translate: 0 12px;
+	}
+
+	.cue {
+		transition: opacity 0.6s ease;
+	}
+
+	&:not(.i-cue) .cue {
+		opacity: 0;
+		visibility: hidden;
+	}
+
+	.bar {
+		transition: opacity 0.6s ease;
+	}
+
+	&:not(.i-bar) .bar {
+		opacity: 0;
+	}
+
+	.sat:not(.shown) {
+		visibility: hidden;
+	}
+
+	/* the static drawing never shows through before the entrance starts */
+	.poster {
+		visibility: hidden;
+	}
+}
+
+.sat.shown {
+	animation: sat-in 0.6s ease-out;
+}
+
+@keyframes sat-in {
+	from {
+		opacity: 0;
+	}
+}

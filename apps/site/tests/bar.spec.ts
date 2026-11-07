@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 test("the bar has the five links and two icons", async ({ page }) => {
 	await page.setViewportSize({ width: 1280, height: 800 });

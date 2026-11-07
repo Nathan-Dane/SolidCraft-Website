@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 test("the home page loads", async ({ page }) => {
 	await page.goto("/");
