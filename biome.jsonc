@@ -5,5 +5,15 @@
 	"formatter": { "indentStyle": "tab", "lineWidth": 100 },
 	"javascript": { "formatter": { "quoteStyle": "double" } },
 	"linter": { "enabled": true, "rules": { "preset": "recommended" } },
-	"assist": { "actions": { "source": { "organizeImports": "on" } } }
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
+	"overrides": [
+		{
+			"includes": ["**/*.astro"],
+			"linter": {
+				"rules": {
+					"correctness": { "noUnusedVariables": "off", "noUnusedImports": "off" }
+				}
+			}
+		}
+	]
 }
