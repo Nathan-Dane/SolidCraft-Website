@@ -1,4 +1,5 @@
-import type { EdgeDef, Style } from "./geometry.ts";
+import type { EdgeDef, EdgeGeom, Style } from "./geometry.ts";
+import type { VEl } from "./scene.ts";
 
 /** A rectangle the field keeps clear of (the page's text): left, top, right, bottom in world units. */
 export type Rect = [number, number, number, number];
@@ -34,6 +35,33 @@ export type Layout = {
 	satTargets: SatTarget[];
 	view: View;
 };
+
+/** The drawn parts of one node. */
+export type NodeEls = {
+	ax1: VEl;
+	ax2: VEl;
+	cross: VEl;
+	pitch?: VEl;
+	boss: VEl;
+	r1?: VEl;
+	r2?: VEl;
+	body?: VEl;
+	bodyAxis?: VEl;
+	holes: VEl[];
+	kid: VEl[];
+	cross2: VEl[];
+	/** the arc a stretched node turns into: two rings and a construction arc, made when first needed */
+	xa?: VEl;
+	xb?: VEl;
+	xc?: VEl;
+	expOn?: boolean;
+};
+
+/** One frame (a group per layer) per node, so a moving node costs one transform write per layer. */
+export type NodeGroups = { c: VEl; p: VEl; r: VEl; a: VEl };
+
+/** The drawn parts of one web. */
+export type EdgeEls = { cl: VEl; cp: VEl; o1: VEl; o2: VEl; sl: VEl; shown?: boolean };
 
 export type NodeKind = "field" | "cap" | "hero" | "sat";
 export type SizeClass = "xl" | "l" | "m" | "s" | "";
@@ -98,8 +126,14 @@ export type FieldNode = {
 	partner: number;
 	pillLeft: boolean;
 	extraHot: number;
-	els: object | null;
+	els: NodeEls | null;
 	step: number;
+	ng?: NodeGroups;
+	n0?: { x: number; y: number; R: number };
+	inChain?: boolean;
+	/** how much of the node the entrance has drawn (undefined: all) */
+	penV?: number;
+	fade0?: number;
 };
 
 export type EdgeSpec = {
@@ -119,8 +153,8 @@ export type FieldEdge = {
 	near: boolean;
 	onC: number;
 	offC: number;
-	g: object | null;
-	els: object | null;
+	g: EdgeGeom | null;
+	els: EdgeEls | null;
 	pulseP: number;
 	pulseDir: number;
 	prevU: number;
@@ -128,6 +162,8 @@ export type FieldEdge = {
 	glowOn: boolean;
 	lastProbe: number;
 	blocked: boolean;
+	gapNow?: number;
+	fade0?: number;
 };
 
 /** The parts of the field's state that the layout reads and writes. */
