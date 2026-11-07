@@ -266,6 +266,17 @@
 		grid-template-columns: minmax(0, 1fr);
 	}
 
+	/* the links and buttons under a section are centred on the page, not on the text above them */
+	.more-link {
+		display: flex;
+		width: fit-content;
+		margin: 0 auto;
+	}
+
+	.actions {
+		justify-content: center;
+	}
+
 	.stage.wide {
 		aspect-ratio: 16 / 10;
 	}
