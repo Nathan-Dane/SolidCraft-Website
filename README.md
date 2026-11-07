@@ -59,9 +59,16 @@ apps/site/     the Astro site
 packages/      frame, tokens, field, cursor
 ```
 
+## Good to know
+
+- **The entrance** plays once per session and is skipped for reduced motion, data saver and scrolled loads. Add `?intro` to see it again and `?nointro` to skip it.
+- **Debug switches:** `?gl=software` lets the field run on a software renderer, and `?debug` exposes the field's host as `window.fieldHost`.
+- **Budgets:** `pnpm build` followed by `pnpm --filter @solidcraft/site check:output` fails when a built file is over its gzipped limit (field engine 35 KB, cursor 6 KB, other scripts 12 KB, CSS and HTML 12 KB).
+- **Idle:** with the hero away and the pointer still, the page asks for no animation frames; the browser tests check it.
+
 ## Status
 
-Early setup. The site is being built here step by step.
+The home page, content pages, field, cursor and entrance are in place. Next up are the mobile menu and the plugin and theme browser.
 
 ## Contributing
 
