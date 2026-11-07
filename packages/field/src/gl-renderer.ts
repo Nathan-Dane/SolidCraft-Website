@@ -90,6 +90,7 @@ export function createGLRenderer(
 		premultipliedAlpha: true,
 		depth: false,
 		stencil: false,
+		powerPreference: "low-power", // a quiet backdrop does not need the discrete GPU
 		failIfMajorPerformanceCaveat: true,
 	};
 	let gl: WebGLRenderingContext | null = null;
