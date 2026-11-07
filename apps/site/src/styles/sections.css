@@ -82,13 +82,10 @@
 	letter-spacing: 0.14em;
 	text-decoration: none;
 	text-transform: uppercase;
-	transition:
-		border-color 0.2s,
-		gap 0.2s;
+	transition: border-color 0.2s;
 
 	&:hover {
 		border-color: var(--line);
-		gap: 14px;
 	}
 }
 
