@@ -147,3 +147,21 @@ test("the cursor does not dock until it is over", async ({ page }) => {
 		).not.toContain("docked");
 	}
 });
+
+test("the cursor's shapes are where the release line ended up once the entrance is over", async ({
+	page,
+}) => {
+	await page.goto(`${URL}&intro`);
+	await page.waitForFunction(() => document.documentElement.classList.contains("has-cursor"));
+	await ended(page);
+	await page.waitForTimeout(500);
+	const link = await page.locator("#ver").boundingBox();
+	if (!link) throw new Error("no version link");
+	await page.mouse.move(link.x + link.width / 2, link.y + link.height / 2, { steps: 8 });
+	await page.waitForTimeout(900);
+	const ring = await page.evaluate(() => {
+		const r = document.querySelector(".cur-ring")?.getBoundingClientRect();
+		return r ? { y: r.y + r.height / 2, h: r.height } : null;
+	});
+	expect(Math.abs((ring?.y ?? 0) - (link.y + link.height / 2))).toBeLessThan(1.5);
+});

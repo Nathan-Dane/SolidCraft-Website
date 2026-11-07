@@ -124,7 +124,14 @@ export function createRegistry(root: ParentNode = document, doc: Document = docu
 
 	const onTransitionEnd = (e: Event) => {
 		const t = e.target as Element | null;
-		if (t?.classList?.contains("rv")) scheduleMeasure();
+		if (!t) return;
+		// a block that moved into place (a reveal, the entrance's rise) takes the shapes inside it with it
+		const moved = /^(translate|transform|top|left|margin)/.test(
+			(e as TransitionEvent).propertyName ?? "",
+		);
+		if (t.classList?.contains("rv") || (moved && (t.matches(FOCUS) || t.querySelector(FOCUS)))) {
+			scheduleMeasure();
+		}
 	};
 
 	const registry: Registry = {
