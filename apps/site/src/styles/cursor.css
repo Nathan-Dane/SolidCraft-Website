@@ -1,0 +1,133 @@
+/* the cursor (see the cursor package): an exact dot, a trailing ring that takes the shape of what it docks on, a faint glow while docked */
+.has-cursor,
+.has-cursor *,
+.has-cursor *::before,
+.has-cursor *::after {
+	cursor: none !important; /* nothing brings the native pointer back */
+}
+
+.has-cursor input,
+.has-cursor select,
+.has-cursor textarea {
+	cursor: text !important;
+}
+
+#cursor {
+	position: fixed;
+	inset: 0;
+	z-index: 1000;
+	contain: layout paint style;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.18s;
+
+	&.on {
+		opacity: 1;
+	}
+
+	/* over selectable text only the beam is shown */
+	&.text .cur-ring {
+		opacity: 0;
+	}
+
+	&.press .cur-ring {
+		background: rgb(81 173 255 / 0.28);
+	}
+
+	/* while the outline is locked on a shape, the shape is the cursor */
+	&.docked .cur-ring {
+		border-color: #a8d6ff;
+		background: rgb(81 173 255 / 0.14);
+		box-shadow:
+			0 0 24px rgb(81 173 255 / 0.35),
+			inset 0 0 18px rgb(81 173 255 / 0.18);
+	}
+
+	&.docked .cur-dot {
+		opacity: 0;
+	}
+
+	&.docked .cur-glow {
+		opacity: 1;
+	}
+}
+
+.cur-ring {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 28px;
+	height: 28px;
+	box-sizing: border-box;
+	border: 1.25px solid rgb(164 212 245 / 0.6);
+	border-radius: 50%;
+	overflow: hidden;
+	transform-origin: 0 0; /* the transform centres the ring itself, so rotation and stretch must not move it */
+	will-change: transform;
+	transition:
+		border-color 0.18s,
+		background 0.18s,
+		box-shadow 0.25s,
+		opacity 0.15s;
+}
+
+.cur-dot {
+	--bh: 20px; /* the beam's height, set from the cursor script to the line of text under it */
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: #fff;
+	box-shadow: 0 0 0 1px rgb(8 22 38 / 0.75);
+	will-change: transform;
+	transition:
+		opacity 0.12s,
+		width 0.14s,
+		height 0.14s,
+		border-radius 0.14s;
+
+	/* over selectable text: a beam as tall as the line */
+	&.beam {
+		width: 2px;
+		height: var(--bh);
+		border-radius: 1px;
+	}
+}
+
+/* only a glow, no solid object, faint; clipped to the ring's outline */
+.cur-glow {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 140px;
+	height: 140px;
+	border-radius: 50%;
+	background: radial-gradient(
+		circle,
+		rgb(150 206 255 / 0.2) 0%,
+		rgb(120 183 220 / 0.08) 36%,
+		rgb(120 183 220 / 0) 70%
+	);
+	opacity: 0;
+	pointer-events: none;
+	will-change: transform;
+	transition: opacity 0.15s;
+}
+
+.cur-ripple {
+	position: absolute;
+	box-sizing: border-box;
+	border: 1.5px solid #a8d6ff;
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#cursor,
+	.cur-ring,
+	.cur-dot,
+	.cur-glow {
+		transition: none;
+	}
+}

@@ -1,3 +1,5 @@
+import { publishField } from "../lib/field-state";
+
 // The field behind the hero. It is only loaded on pages that have one, as its own chunk.
 if (document.querySelector('[data-field-anchor="logo"]')) {
 	const query = new URLSearchParams(location.search);
@@ -17,6 +19,7 @@ if (document.querySelector('[data-field-anchor="logo"]')) {
 				}),
 			)
 			.then((host) => {
+				publishField(host);
 				// ?debug: the host is reachable from the console (and from the tests)
 				if (query.has("debug")) (window as unknown as { fieldHost: unknown }).fieldHost = host;
 			})
