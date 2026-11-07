@@ -36,3 +36,16 @@ test("the page has a social preview image that exists", async ({ page, request }
 	expect(res.ok()).toBe(true);
 	expect(res.headers()["content-type"]).toContain("image/png");
 });
+
+test("the home page has its title and every page has the logo as its icon", async ({
+	page,
+	request,
+}) => {
+	await page.goto("/");
+	await expect(page).toHaveTitle("SolidCraft: free, open-source parametric 3D CAD");
+	await page.goto("/features/");
+	for (const rel of ["icon", "apple-touch-icon"]) {
+		const href = await page.locator(`link[rel="${rel}"]`).first().getAttribute("href");
+		expect((await request.get(href ?? "/missing")).status()).toBe(200);
+	}
+});
