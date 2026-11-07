@@ -76,17 +76,24 @@ html.poster-on .poster {
 	background-size: var(--tile) var(--tile);
 	background-position: calc((100cqw - 2560 * var(--s)) / 2) calc((100cqh - 1440 * var(--s)) / 2);
 	will-change: transform;
-	animation-name: datum-drift;
-	animation-timing-function: linear;
-	animation-fill-mode: both;
-	animation-timeline: scroll(root block);
-	animation-iteration-count: var(--datum-turns);
+
+	@supports (animation-timeline: scroll()) {
+		animation-name: datum-drift;
+		animation-timing-function: linear;
+		animation-fill-mode: both;
+		animation-timeline: scroll(root block);
+		animation-iteration-count: var(--datum-turns);
+	}
 }
 
 @keyframes datum-drift {
 	to {
 		transform: translate3d(0, calc(-1 * var(--tile)), 0);
 	}
+}
+
+html.scroll-js .datum {
+	animation-name: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
