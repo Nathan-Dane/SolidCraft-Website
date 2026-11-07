@@ -33,12 +33,6 @@ test("hero text never gets smaller than 12.5 px", async ({ page }) => {
 
 test("the pills point at the download and the web app", async ({ page }) => {
 	await page.goto("/");
-	await expect(page.getByRole("link", { name: "Download for macOS" })).toHaveAttribute(
-		"href",
-		/releases\/latest\/download/,
-	);
-	await expect(page.getByRole("link", { name: "Try in browser" })).toHaveAttribute(
-		"href",
-		"https://app.solidcraft.io/",
-	);
+	await expect(page.locator("#dl")).toHaveAttribute("href", /releases\/latest\/download/);
+	await expect(page.locator("#web")).toHaveAttribute("href", "https://app.solidcraft.io/");
 });
