@@ -12,6 +12,9 @@
 		"typescript": "6.0.3"
 	},
 	"scripts": {
+		"dev": "pnpm --filter @solidcraft/site dev",
+		"build": "pnpm --filter @solidcraft/site build",
+		"typecheck": "pnpm -r --if-present typecheck",
 		"check": "biome check .",
 		"check:fix": "biome check --write .",
 		"format": "biome format --write ."
