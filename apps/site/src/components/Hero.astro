@@ -6,20 +6,20 @@ const download = `${site.releases}/latest/download/solidcraft-macos-universal.dm
 ---
 
 <section class="hero" id="top" aria-label="SolidCraft">
-	<a class="node-logo" id="node" href="/" aria-label="SolidCraft">
+	<a class="node-logo" id="node" href="/" aria-label="SolidCraft" data-field-anchor="logo">
 		<Logo />
 	</a>
-	<div class="titleblock">
+	<div class="titleblock" data-quiet>
 		<h1>SolidCraft</h1>
 		<div class="by">by Tangency Labs</div>
 		<p class="tag">Open-source parametric CAD, built in Rust.</p>
 	</div>
 	<div class="pills">
-		<a class="pill primary" id="dl" href={download}>
+		<a class="pill primary" id="dl" href={download} data-field-anchor="pill">
 			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5 12 15.5l5-5M5 20h14"></path></svg>
 			Download for macOS
 		</a>
-		<a class="pill ghost" id="web" href={site.app}>
+		<a class="pill ghost" id="web" href={site.app} data-field-anchor="pill">
 			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"></path></svg>
 			Try in browser
 		</a>
