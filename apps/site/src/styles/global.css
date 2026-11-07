@@ -6,3 +6,4 @@
 @import "./fonts.css" layer(base);
 @import "./bar.css" layer(components);
 @import "./hero.css" layer(components);
+@import "./backdrop.css" layer(layout);
