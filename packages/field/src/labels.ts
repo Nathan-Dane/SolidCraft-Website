@@ -18,7 +18,7 @@ import type { FieldEdge, FieldNode } from "./types.ts";
 
 const CHAR_W = ADVANCE * 0.018; // 10.8 units per character at label scale
 
-function textObj(sim: Sim, parent: Label["g"]): LabelText {
+function textObj(parent: Label["g"]): LabelText {
 	const g = el("g", { fill: COL.dim, opacity: 0 }, parent);
 	return { g, str: "", n: 0, uses: [] };
 }
@@ -286,7 +286,7 @@ function makeLabel(sim: Sim, kind: LabelKind, spec: LabelSpec): Label {
 			g,
 		),
 		arrows: el("path", { fill: COL.dim, opacity: 0 }, g),
-		txt: textObj(sim, g),
+		txt: textObj(g),
 		lastTxt: -10,
 		bbox: null,
 		geo: null,
