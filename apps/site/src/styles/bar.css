@@ -22,12 +22,19 @@
 		z-index: -1;
 		background: rgb(16 36 58 / 0.95);
 		box-shadow: 0 1px 0 rgb(120 183 220 / 0.14);
-		opacity: 0;
-		animation-name: bar-solid;
-		animation-timing-function: linear;
-		animation-fill-mode: both;
-		animation-timeline: scroll(root block);
-		animation-range: 55vh 70vh;
+		opacity: var(--bar-solid);
+	}
+
+	--bar-solid: 0; /* set from the scheduler where the animation below is not supported (scripts/scroll-fallback.ts) */
+
+	@supports (animation-timeline: scroll()) {
+		&::before {
+			animation-name: bar-solid;
+			animation-timing-function: linear;
+			animation-fill-mode: both;
+			animation-timeline: scroll(root block);
+			animation-range: 55vh 70vh;
+		}
 	}
 
 	.mini {
@@ -103,6 +110,11 @@
 			display: none;
 		}
 	}
+}
+
+/* when the scheduler drives the bar (scripts/scroll-fallback.ts adds the class), the animation is off, so the two cannot disagree */
+html.scroll-js .bar::before {
+	animation-name: none;
 }
 
 @keyframes bar-solid {
