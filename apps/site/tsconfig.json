@@ -1,5 +1,9 @@
 {
 	"extends": "../../tsconfig.base.json",
-	"include": ["src", "astro.config.mjs", ".astro/types.d.ts"],
-	"exclude": ["dist"]
+	"include": ["src", "scripts", "astro.config.mjs", ".astro/types.d.ts"],
+	"exclude": ["dist"],
+	"compilerOptions": {
+		"types": ["node"],
+		"allowImportingTsExtensions": true
+	}
 }
