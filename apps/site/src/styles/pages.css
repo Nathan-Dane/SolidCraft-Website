@@ -1,0 +1,48 @@
+.page-head {
+	padding: calc(var(--bar-height) + clamp(48px, 10vh, 112px)) 0 clamp(32px, 6vh, 64px);
+
+	h1 {
+		margin: 0 0 22px;
+		font: 600 clamp(40px, 5.6vw, 84px) / 1.02 var(--font-display);
+		letter-spacing: -0.012em;
+		text-wrap: balance;
+	}
+
+	.lede {
+		margin-bottom: 0;
+	}
+}
+
+.page-body {
+	padding-bottom: clamp(72px, 12vh, 136px);
+
+	.stage,
+	.cards {
+		margin-bottom: clamp(32px, 6vh, 56px);
+	}
+
+	.card h2 {
+		margin: 0 0 6px;
+		font: 600 24px var(--font-display);
+	}
+}
+
+.prose {
+	max-width: 62ch;
+
+	h2 {
+		margin: clamp(32px, 6vh, 56px) 0 14px;
+		font: 600 clamp(26px, 2.6vw, 36px) / 1.1 var(--font-display);
+	}
+
+	h2:first-child {
+		margin-top: 0;
+	}
+
+	p {
+		margin: 0 0 18px;
+		color: var(--muted);
+		font-size: clamp(17px, 1.4vw, 20px);
+		line-height: 1.6;
+	}
+}

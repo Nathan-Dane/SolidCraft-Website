@@ -1,0 +1,49 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+import Base from "./Base.astro";
+
+interface Props {
+	entry: CollectionEntry<"pages">;
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+---
+
+<Base title={`${data.title} — SolidCraft`} description={data.description}>
+	<main id="main" class="page">
+		<header class="page-head">
+			<div class="wrap">
+				<p class="eyebrow">{data.eyebrow}</p>
+				<h1>{data.title}</h1>
+				<p class="lede">{data.lede}</p>
+			</div>
+		</header>
+		<div class="page-body wrap">
+			{
+				data.stage && (
+					<div class="stage" data-stage={data.stage.kind}>
+						<b>{data.stage.label}</b>
+						<span>{data.stage.text}</span>
+					</div>
+				)
+			}
+			{
+				data.cards && (
+					<div class="cards">
+						{data.cards.map((card) => (
+							<article class="card">
+								<div class="thumb"><b>Image</b></div>
+								<h2>{card.title}</h2>
+								<p>{card.text}</p>
+							</article>
+						))}
+					</div>
+				)
+			}
+			<div class="prose"><Content /></div>
+		</div>
+	</main>
+</Base>
