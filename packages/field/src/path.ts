@@ -1,7 +1,7 @@
 /** Paths as the renderer reads them: lines and circular arcs (M, L, H, V, A and Z, the only commands the field produces). */
 import { TAU } from "./geometry.ts";
 
-export type Line = { t: 0; x0: number; y0: number; x1: number; y1: number; len: number };
+export type LineSeg = { t: 0; x0: number; y0: number; x1: number; y1: number; len: number };
 export type ArcSeg = {
 	t: 1;
 	cx: number;
@@ -11,7 +11,7 @@ export type ArcSeg = {
 	sweep: number;
 	len: number;
 };
-export type Seg = Line | ArcSeg;
+export type Seg = LineSeg | ArcSeg;
 export type Sub = { segs: Seg[]; pts: number[]; closed: boolean };
 export type ParsedPath = { subs: Sub[]; len: number };
 
