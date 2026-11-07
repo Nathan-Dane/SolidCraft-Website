@@ -15,6 +15,7 @@ interface Props {
 
 const { title, description = site.description, expect } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const speculation = { prefetch: [{ where: { href_matches: "/*" }, eagerness: "moderate" }] };
 const data = {
 	"@context": "https://schema.org",
 	"@type": "WebSite",
@@ -44,6 +45,7 @@ const data = {
 		<meta property="og:url" content={canonical} />
 		<script type="application/ld+json" set:html={JSON.stringify(data)} />
 		<script is:inline>document.documentElement.classList.add("js");</script>
+		<script type="speculationrules" is:inline set:html={JSON.stringify(speculation)} />
 		<title>{title}</title>
 	</head>
 	<body>
