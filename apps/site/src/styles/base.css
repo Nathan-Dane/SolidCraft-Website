@@ -32,3 +32,19 @@ body {
 	height: 0;
 	overflow: hidden;
 }
+
+.skip {
+	position: fixed;
+	z-index: 100;
+	top: 12px;
+	left: 12px;
+	padding: 10px 16px;
+	border-radius: 10px;
+	background: var(--ink-950);
+	color: var(--text);
+	transform: translateY(-200%);
+}
+
+.skip:focus {
+	transform: none;
+}
