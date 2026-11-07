@@ -213,7 +213,11 @@ importers:
 
   packages/cursor: {}
 
-  packages/field: {}
+  packages/field:
+    devDependencies:
+      '@types/node':
+        specifier: ^24.19.2
+        version: 24.19.2
 
   packages/frame:
     devDependencies:
