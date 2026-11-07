@@ -99,7 +99,7 @@ export default function ReleaseLine() {
 	}
 
 	return (
-		<div class="statusblock">
+		<div class="statusblock" data-quiet>
 			<div class="meta status" data-ch={channel}>
 				<a class="ver" id="ver" href={line.href}>
 					<i class="dot" />
