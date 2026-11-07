@@ -207,3 +207,44 @@ test("once the field has parked, the ring still follows and still docks on eleme
 	await moveTo(page, box.x + box.width / 2, box.y + box.height / 2);
 	expect((await state(page)).cls).toContain("docked");
 });
+
+test("an element above a node always takes the ring, even when the node is already docked", async ({
+	page,
+}) => {
+	await ready(page, "/?gl=software&debug");
+	await page.waitForFunction(
+		() => (window as unknown as { fieldHost?: unknown }).fieldHost !== undefined,
+	);
+	const link = await page.locator(".bar nav:not(.drawer) a", { hasText: "Plugins" }).boundingBox();
+	if (!link) throw new Error("no link");
+	// a node is kept behind the link; the pointer enters the node just below the bar, where no link is, and then moves up into the link
+	const cx = link.x + link.width / 2;
+	const cy = link.y + link.height / 2;
+	const below = link.y + link.height + 30;
+	await page.evaluate(
+		([x, y]) => {
+			const host = (
+				window as unknown as {
+					fieldHost: {
+						view: { x: number; y: number; s: number };
+						field: { state: { nodes: { x: number; y: number; fixed: boolean; kind?: string }[] } };
+					};
+				}
+			).fieldHost;
+			const node = host.field.state.nodes.find((n) => !n.fixed && n.kind !== "cap");
+			if (!node) throw new Error("no node");
+			// the field stops drifting, so the node stays where it is put
+			(host.field as unknown as { step: () => void }).step = () => {};
+			node.x = host.view.x + (x as number) / host.view.s;
+			node.y = host.view.y + (y as number) / host.view.s;
+		},
+		[cx, cy],
+	);
+	await moveTo(page, cx, below);
+	const onNode = await state(page);
+	expect(onNode.cls).toContain("docked");
+	expect(onNode.ring[2] ?? 0).toBeGreaterThan(link.width * 1.5); // the node, not the link
+	await page.mouse.move(cx, cy, { steps: 15 });
+	await page.waitForTimeout(500);
+	expect(Math.abs(((await state(page)).ring[2] ?? 0) - link.width)).toBeLessThan(1.5);
+});
