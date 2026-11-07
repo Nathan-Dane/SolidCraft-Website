@@ -33,6 +33,32 @@ The public site for SolidCraft, the open-source parametric CAD app. It introduce
 | Tooling           | pnpm, Biome, strict TypeScript    |
 | Tests             | node:test, Playwright, axe        |
 
+## Getting started
+
+You need Node 24 and pnpm.
+
+```sh
+pnpm install
+pnpm dev
+```
+
+Other commands:
+
+| Command          | What it does                 |
+| ---------------- | ---------------------------- |
+| `pnpm build`     | Builds the site              |
+| `pnpm check`     | Formats and lints with Biome |
+| `pnpm typecheck` | Type-checks every package    |
+| `pnpm test`      | Runs unit tests              |
+| `pnpm test:e2e`  | Runs browser tests           |
+
+## Layout
+
+```text
+apps/site/     the Astro site
+packages/      frame, tokens, field, cursor
+```
+
 ## Status
 
 Early setup. The site is being built here step by step.
