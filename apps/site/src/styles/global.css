@@ -14,3 +14,4 @@
 @import "./footer.css" layer(components);
 @import "./pages.css" layer(layout);
 @import "./motion.css" layer(motion);
+@import "./intro.css" layer(motion);

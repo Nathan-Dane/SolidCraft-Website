@@ -1,4 +1,4 @@
-import { expect, type Page, test } from "@playwright/test";
+import { expect, type Page, test } from "./base";
 
 // The tests run the live field on a software renderer (?gl=software), which the page refuses by default
 const URL = "/?gl=software&debug";

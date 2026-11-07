@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 test("the footer lists three columns and the independence line", async ({ page }) => {
 	await page.setViewportSize({ width: 1280, height: 800 });

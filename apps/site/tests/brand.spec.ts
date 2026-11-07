@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 test("the logo is defined once and drawn from it", async ({ page }) => {
 	await page.goto("/");

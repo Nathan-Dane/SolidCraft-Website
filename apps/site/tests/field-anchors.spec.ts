@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 test("the hero marks the logo and the two pills as nodes of the field and its text as quiet", async ({
 	page,

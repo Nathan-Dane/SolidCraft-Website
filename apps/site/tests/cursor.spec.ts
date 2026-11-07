@@ -1,4 +1,4 @@
-import { expect, type Page, test } from "@playwright/test";
+import { expect, type Page, test } from "./base";
 
 test.skip(({ isMobile }) => isMobile, "touch screens have no cursor");
 test.use({ viewport: { width: 1440, height: 900 } });

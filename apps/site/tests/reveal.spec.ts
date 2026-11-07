@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 const opacity = (page: import("@playwright/test").Page, selector: string) =>
 	page.evaluate(

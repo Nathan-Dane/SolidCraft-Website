@@ -26,9 +26,12 @@ if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
 						attract: (id, dx, dy) => field.attract(id, dx, dy),
 						setHot: (id, on) => field.setHot(id, on),
 					});
-					// the field parks once the hero has left: the ring stops docking on nodes but keeps following the pointer
-					const sync = () =>
-						cursor.setEnabled(!document.documentElement.classList.contains("hero-away"));
+					// the field parks once the hero has left, and is not there to dock on during the entrance: the ring stops docking on
+					// nodes but keeps following the pointer
+					const sync = () => {
+						const classes = document.documentElement.classList;
+						cursor.setEnabled(!classes.contains("hero-away") && !classes.contains("intro"));
+					};
 					new MutationObserver(sync).observe(document.documentElement, {
 						attributes: true,
 						attributeFilter: ["class"],

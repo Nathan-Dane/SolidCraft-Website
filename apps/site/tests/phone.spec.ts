@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 for (const width of [390, 768]) {
 	test.describe(`at ${width} px`, () => {

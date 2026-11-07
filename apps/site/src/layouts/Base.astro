@@ -27,6 +27,9 @@ const data = {
 	description,
 	publisher: { "@type": "Organization", name: "Tangency Labs" },
 };
+// Decides before the first paint whether the entrance plays: once per session, never for reduced motion, data saver, a scrolled
+// load or ?nointro (?intro plays it again). If it has not started within 2.5 s, the page shows itself regardless.
+const gate = `(function(d){try{var q=location.search;if(matchMedia("(prefers-reduced-motion: reduce)").matches&&!/[?&]motion/.test(q))return;if(scrollY>=40||/[?&]nointro/.test(q)||(navigator.connection&&navigator.connection.saveData))return;var s=sessionStorage;if(!/[?&]intro/.test(q)&&s.getItem("sc-intro"))return;s.setItem("sc-intro","1");d.classList.add("intro");setTimeout(function(){if(d.dataset.intro!=="playing")d.classList.remove("intro")},2500)}catch(e){}})(document.documentElement)`;
 ---
 
 <!doctype html>
@@ -48,6 +51,7 @@ const data = {
 		<meta property="og:url" content={canonical} />
 		<script type="application/ld+json" set:html={JSON.stringify(data)} />
 		<script is:inline>document.documentElement.classList.add("js");</script>
+		{hero && <script is:inline set:html={gate} />}
 		<script type="speculationrules" is:inline set:html={JSON.stringify(speculation)} />
 		<title>{title}</title>
 	</head>

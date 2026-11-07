@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 const anchors = ["agents", "modular", "panels", "themes", "kernel", "showcase", "open", "get"];
 

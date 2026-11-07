@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./base";
 
 test("without scripts the static drawing fills the backdrop", async ({ browser }) => {
 	const context = await browser.newContext({
