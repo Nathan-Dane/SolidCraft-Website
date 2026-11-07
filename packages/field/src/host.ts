@@ -14,6 +14,7 @@ import { createField, type Field } from "./field.ts";
 import { createGLRenderer, type GLRenderer } from "./gl-renderer.ts";
 import { createGovernor } from "./governor.ts";
 import { createHero, type Hero } from "./hero.ts";
+import { createIntro, type Intro, type IntroEffects } from "./intro.ts";
 import { fieldOpacity, satelliteOpacity } from "./parallax.ts";
 import { fitView, type ViewBox } from "./view.ts";
 
@@ -29,6 +30,11 @@ export type HostOptions = {
 	reduced?: boolean;
 	/** Accept a software renderer (for tests). */
 	allowSoftware?: boolean;
+	/**
+	 * The page is showing its entrance (html.intro): the field starts undrawn and is drawn in, and the page's parts are revealed
+	 * through these. Without them the field simply starts finished.
+	 */
+	intro?: IntroEffects;
 	/** Called after the field was rebuilt for a new layout (a resize). */
 	onRebuild?: (host: Host) => void;
 };
@@ -38,6 +44,8 @@ export type Host = {
 	readonly field: Field | null;
 	readonly hero: Hero;
 	readonly view: ViewBox;
+	/** The entrance, while there is one; null when the field started finished. */
+	readonly intro: Intro | null;
 	/** Give up the live field for the poster. */
 	fallback(why: string): void;
 	stop(): void;
@@ -69,6 +77,7 @@ export async function startHost(opts: HostOptions): Promise<Host> {
 	let lastSats = -1;
 	let resizeTimer = 0;
 	let stopped = false;
+	let intro: Intro | null = null;
 
 	const host: Host = {
 		get tier() {
@@ -80,6 +89,9 @@ export async function startHost(opts: HostOptions): Promise<Host> {
 		hero,
 		get view() {
 			return vb;
+		},
+		get intro() {
+			return intro;
 		},
 		fallback,
 		stop,
@@ -94,6 +106,7 @@ export async function startHost(opts: HostOptions): Promise<Host> {
 	function fallback(why: string): void {
 		if (tier === "poster") return;
 		console.warn(`The field is off: ${why}`);
+		intro?.cancel();
 		stop();
 		backdrop.classList.remove("live", "parked");
 		hero.release();
@@ -122,6 +135,7 @@ export async function startHost(opts: HostOptions): Promise<Host> {
 		field.setView(vb.x, vb.y, vb.w, vb.h);
 		field.setScroll(window.scrollY / vb.s);
 		if (!animate) field.advance(STILL_SECONDS);
+		intro?.rebuilt(); // a resize does not end the entrance
 	}
 
 	/** The scroll effects on the page's parts: the field's fade, parking, and the satellites' fade. */
@@ -182,6 +196,13 @@ export async function startHost(opts: HostOptions): Promise<Host> {
 	const writer = scheduler.add({
 		phase: "write",
 		run(frame) {
+			if (intro) {
+				scheduler.poke(); // the drawing is smooth, whatever the visitor does
+				// the page showed itself before the entrance began (its safety limit): nothing is left to play
+				if (intro.state === "waiting" && !root.classList.contains("intro")) intro.cancel();
+				else intro.tick(frame.time, Number.isNaN(lastY) ? 0 : lastY);
+				if (!intro.busy) intro = null;
+			}
 			paintScroll(lastY);
 			if (!parked) {
 				hero.follow(field, vb);
@@ -197,7 +218,7 @@ export async function startHost(opts: HostOptions): Promise<Host> {
 			}
 			if (!animate && !moved) return "sleep";
 			moved = false;
-			return parked ? "sleep" : undefined;
+			return parked && !intro ? "sleep" : undefined;
 		},
 	});
 	tasks.push(writer);
@@ -259,6 +280,10 @@ export async function startHost(opts: HostOptions): Promise<Host> {
 	setTier(tier); // the satellites are shown (and so measured) only once the field is on
 	build();
 	hero.bind(field, () => scheduler.poke());
+	// before the first draw, so nothing of the finished field is ever shown
+	if (animate && opts.intro && root.classList.contains("intro")) {
+		intro = createIntro(field, () => hero.ids, opts.intro, performance.now());
+	}
 	backdrop.classList.add("live"); // the canvas has a size only once it is shown
 	gl.resize();
 	gl.draw(vb, true);
