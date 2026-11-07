@@ -4,6 +4,7 @@ export * from "./field.ts";
 export * from "./geometry.ts";
 export * from "./gl-renderer.ts";
 export * from "./glyphs.ts";
+export * from "./governor.ts";
 export * from "./layout.ts";
 export * from "./math.ts";
 export * from "./palette.ts";
