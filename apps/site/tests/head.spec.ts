@@ -23,3 +23,16 @@ test("the skip link is the first stop and reaches the main content", async ({ pa
 	await page.keyboard.press("Enter");
 	await expect(page).toHaveURL(/#main$/);
 });
+
+test("the page has a social preview image that exists", async ({ page, request }) => {
+	await page.goto("/features/");
+	const image = await page.locator('meta[property="og:image"]').getAttribute("content");
+	expect(image).toBe("https://solidcraft.io/og.png");
+	await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+		"content",
+		"summary_large_image",
+	);
+	const res = await request.get("/og.png");
+	expect(res.ok()).toBe(true);
+	expect(res.headers()["content-type"]).toContain("image/png");
+});
