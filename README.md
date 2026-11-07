@@ -24,14 +24,14 @@ The public site for SolidCraft, the open-source parametric CAD app. It introduce
 
 ## Stack
 
-| Area | Choice |
-| --- | --- |
-| Pages | Astro, static output |
-| Interactive parts | Preact with signals |
-| Styling | Native CSS with design tokens |
-| Hero | Custom WebGL renderer, TypeScript |
-| Tooling | pnpm, Biome, strict TypeScript |
-| Tests | node:test, Playwright, axe |
+| Area              | Choice                            |
+| ----------------- | --------------------------------- |
+| Pages             | Astro, static output              |
+| Interactive parts | Preact with signals               |
+| Styling           | Native CSS with design tokens     |
+| Hero              | Custom WebGL renderer, TypeScript |
+| Tooling           | pnpm, Biome, strict TypeScript    |
+| Tests             | node:test, Playwright, axe        |
 
 ## Status
 
