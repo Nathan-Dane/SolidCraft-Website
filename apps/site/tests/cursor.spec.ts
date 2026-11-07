@@ -34,7 +34,7 @@ test("the native pointer is hidden everywhere and the ring appears with the firs
 	await moveTo(page, 500, 500);
 	expect((await state(page)).cls).toContain("on");
 	const cursors = await page.evaluate(() =>
-		[".bar", ".bar nav a", ".mini", "main", "footer"].map(
+		[".bar", ".bar nav:not(.drawer) a", ".mini", "main", "footer"].map(
 			(s) => getComputedStyle(document.querySelector(s) as Element).cursor,
 		),
 	);
@@ -45,7 +45,7 @@ test("over a link the ring takes its exact shape, the dot gives way and a faint 
 	page,
 }) => {
 	await ready(page);
-	const box = await page.locator(".bar nav a", { hasText: "Themes" }).boundingBox();
+	const box = await page.locator(".bar nav:not(.drawer) a", { hasText: "Themes" }).boundingBox();
 	if (!box) throw new Error("no link");
 	await moveTo(page, box.x + box.width / 2, box.y + box.height / 2);
 	const s = await state(page);
@@ -66,7 +66,7 @@ test("a docked element leans toward the pointer by a few pixels and settles back
 	page,
 }) => {
 	await ready(page);
-	const link = page.locator(".bar nav a", { hasText: "Themes" });
+	const link = page.locator(".bar nav:not(.drawer) a", { hasText: "Themes" });
 	const box = await link.boundingBox();
 	if (!box) throw new Error("no link");
 	await moveTo(page, box.x + box.width - 4, box.y + box.height / 2);
@@ -101,8 +101,8 @@ test("over selectable text the dot becomes a beam as tall as the line and the ri
 
 test("where two outlines overlap the one on top takes the ring at once", async ({ page }) => {
 	await ready(page);
-	const a = await page.locator(".bar nav a", { hasText: "Features" }).boundingBox();
-	const b = await page.locator(".bar nav a", { hasText: "Plugins" }).boundingBox();
+	const a = await page.locator(".bar nav:not(.drawer) a", { hasText: "Features" }).boundingBox();
+	const b = await page.locator(".bar nav:not(.drawer) a", { hasText: "Plugins" }).boundingBox();
 	if (!a || !b) throw new Error("no links");
 	await moveTo(page, a.x + a.width / 2, a.y + a.height / 2);
 	expect(Math.abs(((await state(page)).ring[2] ?? 0) - a.width)).toBeLessThan(1.5);
@@ -202,7 +202,7 @@ test("once the field has parked, the ring still follows and still docks on eleme
 	);
 	await page.evaluate(() => window.scrollTo({ top: 3000, behavior: "instant" }));
 	await page.waitForTimeout(500);
-	const box = await page.locator(".bar nav a", { hasText: "Plugins" }).boundingBox();
+	const box = await page.locator(".bar nav:not(.drawer) a", { hasText: "Plugins" }).boundingBox();
 	if (!box) throw new Error("no link");
 	await moveTo(page, box.x + box.width / 2, box.y + box.height / 2);
 	expect((await state(page)).cls).toContain("docked");

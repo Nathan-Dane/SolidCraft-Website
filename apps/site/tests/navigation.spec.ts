@@ -51,9 +51,9 @@ test("the links on a page belong to that page, whatever the scroll position", as
 
 test("the bar keeps its place while the page scrolls", async ({ page }) => {
 	await page.goto("/");
-	const before = await page.locator(".bar nav a").first().boundingBox();
+	const before = await page.locator(".bar nav:not(.drawer) a").first().boundingBox();
 	await page.evaluate(() => window.scrollTo({ top: 1500, behavior: "instant" }));
-	const after = await page.locator(".bar nav a").first().boundingBox();
+	const after = await page.locator(".bar nav:not(.drawer) a").first().boundingBox();
 	expect(after).toEqual(before);
 });
 

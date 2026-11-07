@@ -105,9 +105,110 @@
 		}
 	}
 
+	/* below 1000 px the links move into a menu */
+	.menu-btn,
+	.drawer {
+		display: none;
+	}
+
 	@media (max-width: 1000px) {
-		nav {
+		nav:not(.drawer) {
 			display: none;
+		}
+
+		.menu-btn {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 40px;
+			height: 40px;
+			padding: 0;
+			border: 0;
+			border-radius: 12px;
+			background: none;
+			color: var(--cool);
+			cursor: pointer;
+
+			/* three lines that become a cross */
+			span,
+			span::before,
+			span::after {
+				display: block;
+				width: 18px;
+				height: 2px;
+				border-radius: 1px;
+				background: currentColor;
+				transition:
+					transform 0.2s,
+					background 0.2s;
+			}
+
+			span {
+				position: relative;
+			}
+
+			span::before,
+			span::after {
+				content: "";
+				position: absolute;
+				left: 0;
+			}
+
+			span::before {
+				top: -6px;
+			}
+
+			span::after {
+				top: 6px;
+			}
+
+			&:hover,
+			&:focus-visible,
+			&[aria-expanded="true"] {
+				color: var(--text);
+			}
+
+			&[aria-expanded="true"] span {
+				background: transparent;
+			}
+
+			&[aria-expanded="true"] span::before {
+				transform: translateY(6px) rotate(45deg);
+			}
+
+			&[aria-expanded="true"] span::after {
+				transform: translateY(-6px) rotate(-45deg);
+			}
+		}
+
+		.drawer:not([hidden]) {
+			position: absolute;
+			inset: 100% 0 auto 0;
+			display: flex;
+			flex-direction: column;
+			padding: 8px var(--gutter) 16px;
+			background: rgb(16 36 58 / 0.97);
+			box-shadow: 0 1px 0 rgb(120 183 220 / 0.14);
+			font: 400 var(--text-min) var(--font-mono);
+			letter-spacing: 0.14em;
+			text-transform: uppercase;
+
+			a {
+				padding: 16px 0;
+				border-bottom: 1px solid rgb(120 183 220 / 0.12);
+				color: var(--cool);
+				text-decoration: none;
+
+				&:last-child {
+					border-bottom: 0;
+				}
+
+				&:hover,
+				&:focus-visible,
+				&[aria-current="page"] {
+					color: var(--text);
+				}
+			}
 		}
 	}
 }
@@ -125,7 +226,10 @@ html.scroll-js .bar::before {
 
 @media (prefers-reduced-motion: reduce) {
 	.bar nav a,
-	.bar .ico {
+	.bar .ico,
+	.bar .menu-btn span,
+	.bar .menu-btn span::before,
+	.bar .menu-btn span::after {
 		transition: none;
 	}
 }
