@@ -1,0 +1,96 @@
+.bar {
+	position: fixed;
+	inset: 0 0 auto 0;
+	z-index: 20;
+	height: var(--bar-height);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 var(--gutter);
+	background: linear-gradient(
+		to bottom,
+		rgb(16 36 58 / 0.96) 0%,
+		rgb(16 36 58 / 0.7) 55%,
+		rgb(16 36 58 / 0) 100%
+	);
+
+	.mini {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		padding: 6px 12px;
+		margin-left: -12px;
+		border-radius: 12px;
+		text-decoration: none;
+		font: 600 18px var(--font-display);
+		letter-spacing: 0.01em;
+
+		svg {
+			width: 22px;
+			height: 25px;
+		}
+	}
+
+	nav {
+		display: flex;
+		gap: clamp(30px, 2.6vw, 44px);
+		font: 400 var(--text-min) var(--font-mono);
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+
+		a {
+			padding: 8px 12px;
+			margin: 0 -12px;
+			border-radius: 10px;
+			border-bottom: 1px solid transparent;
+			color: var(--cool);
+			text-decoration: none;
+			transition:
+				color 0.2s,
+				border-color 0.2s;
+
+			&:hover,
+			&:focus-visible {
+				color: var(--text);
+				border-color: var(--line);
+			}
+		}
+	}
+
+	.right {
+		display: flex;
+		gap: 8px;
+		margin-right: -10px; /* the icons' padding is for the cursor ring: the glyphs line up with the page margin */
+	}
+
+	.ico {
+		display: inline-flex;
+		padding: 10px;
+		border-radius: 12px;
+		color: var(--cool);
+		transition: color 0.2s;
+
+		svg {
+			width: 20px;
+			height: 20px;
+		}
+
+		&:hover,
+		&:focus-visible {
+			color: var(--text);
+		}
+	}
+
+	@media (max-width: 1000px) {
+		nav {
+			display: none;
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.bar nav a,
+	.bar .ico {
+		transition: none;
+	}
+}
