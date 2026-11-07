@@ -9,12 +9,17 @@ export type Frame = {
 	dt: number;
 };
 
+/** What a task returns: nothing to run again next frame, or "sleep" to stay out of the loop until it is woken. */
+export type Result = "sleep" | undefined;
+
 export type TaskOptions = {
 	phase: Phase;
-	run(frame: Frame): void;
+	run(frame: Frame): Result;
 };
 
 export type Task = {
+	/** Put a sleeping task back in the loop (the frames start again if none was running). */
+	wake(): void;
 	remove(): void;
 };
 
@@ -31,7 +36,8 @@ export type Scheduler = {
 const MAX_DT = 0.05;
 
 export function createScheduler(env: Env): Scheduler {
-	const tasks: { phase: Phase; run(frame: Frame): void }[] = [];
+	type Entry = { phase: Phase; run(frame: Frame): Result; awake: boolean };
+	const tasks: Entry[] = [];
 	let handle = 0;
 	let last: number | null = null;
 
@@ -42,26 +48,45 @@ export function createScheduler(env: Env): Scheduler {
 		const current = { time, dt };
 		for (const phase of PHASES) {
 			for (const task of [...tasks]) {
-				if (task.phase === phase && tasks.includes(task)) task.run(current);
+				if (task.phase !== phase || !task.awake || !tasks.includes(task)) continue;
+				if (task.run(current) === "sleep") task.awake = false;
 			}
 		}
-		if (tasks.length > 0) handle = env.request(frame);
+		if (anyAwake()) handle = env.request(frame);
+		else last = null; // a long sleep is not a long frame
+	}
+
+	function anyAwake(): boolean {
+		return tasks.some((t) => t.awake);
+	}
+
+	function ensure(): void {
+		if (handle === 0 && anyAwake()) handle = env.request(frame);
+	}
+
+	function settle(): void {
+		if (handle !== 0 && !anyAwake()) {
+			env.cancel(handle);
+			handle = 0;
+			last = null;
+		}
 	}
 
 	return {
 		add(options) {
-			const task = { phase: options.phase, run: options.run };
+			const task: Entry = { phase: options.phase, run: options.run, awake: true };
 			tasks.push(task);
-			if (handle === 0) handle = env.request(frame);
+			ensure();
 			return {
+				wake() {
+					if (!tasks.includes(task)) return;
+					task.awake = true;
+					ensure();
+				},
 				remove() {
 					const i = tasks.indexOf(task);
 					if (i >= 0) tasks.splice(i, 1);
-					if (tasks.length === 0 && handle !== 0) {
-						env.cancel(handle);
-						handle = 0;
-						last = null;
-					}
+					settle();
 				},
 			};
 		},
