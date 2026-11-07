@@ -11,6 +11,7 @@
 	/* one world unit of the drawing in pixels: the drawing covers the window, centred */
 	--s: max(100cqw / 2560, 100cqh / 1440);
 	--tile: calc(320 * var(--s));
+	--datum-turns: 1; /* set from datum.ts once the page height is known */
 
 	/* a gradient in the page colour, not a mask: a mask makes the browser redraw the whole backdrop through an offscreen surface */
 	&::after {
@@ -44,4 +45,21 @@
 	background-size: var(--tile) var(--tile);
 	background-position: calc((100cqw - 2560 * var(--s)) / 2) calc((100cqh - 1440 * var(--s)) / 2);
 	will-change: transform;
+	animation-name: datum-drift;
+	animation-timing-function: linear;
+	animation-fill-mode: both;
+	animation-timeline: scroll(root block);
+	animation-iteration-count: var(--datum-turns);
+}
+
+@keyframes datum-drift {
+	to {
+		transform: translate3d(0, calc(-1 * var(--tile)), 0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.datum {
+		animation: none;
+	}
 }
