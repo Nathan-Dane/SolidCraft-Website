@@ -16,6 +16,8 @@ export const tokenNames = [
 	"--action",
 	"--action-bottom",
 	"--action-border",
+	"--action-strong",
+	"--action-strong-hover",
 	"--warn",
 	"--focus",
 	"--font-display",
