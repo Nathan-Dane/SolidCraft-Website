@@ -10,11 +10,13 @@ import { site } from "../data/site";
 interface Props {
 	title: string;
 	description?: string;
+	/** The page has the hero, so the backdrop carries the field. */
+	hero?: boolean;
 	/** The id of the element that ends the content the first paint needs; the page is not painted before it is parsed. */
 	expect?: string;
 }
 
-const { title, description = site.description, expect } = Astro.props;
+const { title, description = site.description, expect, hero = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const speculation = { prefetch: [{ where: { href_matches: "/*" }, eagerness: "moderate" }] };
 const data = {
@@ -52,13 +54,14 @@ const data = {
 	<body>
 		<a class="skip" href="#main">Skip to content</a>
 		<BrandSprite />
-		<Backdrop />
+		<Backdrop field={hero} />
 		<Bar />
 		<slot />
 		<Footer />
 		<script>
 			import "../scripts/reveal";
 			import "../scripts/scroll-fallback";
+			import "../scripts/field";
 		</script>
 	</body>
 </html>

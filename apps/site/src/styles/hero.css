@@ -11,6 +11,14 @@
 		height: 100svh;
 	}
 
+	/* the hero does not catch the pointer itself, so the field behind it can; its parts do */
+	pointer-events: none;
+
+	> *,
+	.statusblock {
+		pointer-events: auto;
+	}
+
 	/* the island that holds the release line takes no box of its own, before and after it is hydrated, so nothing moves */
 	astro-island {
 		display: contents;

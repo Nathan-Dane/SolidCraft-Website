@@ -1,12 +1,23 @@
 ---
+interface Props {
+	/** The page has the hero: it gets the field's canvas and the poster behind it. */
+	field?: boolean;
+}
+
+const { field = false } = Astro.props;
 ---
 
 <div class="backdrop" aria-hidden="true">
 	<div class="datum-glow"></div>
 	<div class="datum"></div>
-	<div class="poster">
-		<img src="/field/poster.svg" alt="" width="2560" height="1440" loading="lazy" decoding="async" fetchpriority="low" />
-	</div>
+	{field && <canvas class="field-canvas"></canvas>}
+	{
+		field && (
+			<div class="poster">
+				<img src="/field/poster.svg" alt="" width="2560" height="1440" loading="lazy" decoding="async" fetchpriority="low" />
+			</div>
+		)
+	}
 </div>
 
 <script>

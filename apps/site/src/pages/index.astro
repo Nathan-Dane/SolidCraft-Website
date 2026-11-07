@@ -9,7 +9,7 @@ import Base from "../layouts/Base.astro";
 const sections = (await getCollection("home")).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<Base title="SolidCraft — open-source parametric CAD, built in Rust" expect="top-end">
+<Base title="SolidCraft — open-source parametric CAD, built in Rust" expect="top-end" hero>
 	<main id="main" class="page">
 		<Satellites />
 		<Hero>

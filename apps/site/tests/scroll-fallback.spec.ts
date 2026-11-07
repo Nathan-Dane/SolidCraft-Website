@@ -58,7 +58,7 @@ test("the datum sheet moves at 12% of the scroll and wraps by whole tiles", asyn
 });
 
 test("the loop sleeps when the page is still", async ({ page }) => {
-	await page.goto("/");
+	await page.goto("/features/"); // a page without the field, whose loop is the only one
 	await page.evaluate(() => window.scrollTo({ top: 600, behavior: "instant" }));
 	await page.waitForTimeout(1000);
 	const requested = await page.evaluate(
