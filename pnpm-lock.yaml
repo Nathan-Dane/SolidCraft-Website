@@ -179,6 +179,9 @@ importers:
 
   apps/site:
     dependencies:
+      '@solidcraft/tokens':
+        specifier: workspace:*
+        version: link:../../packages/tokens
       astro:
         specifier: 7.4.7
         version: 7.4.7(@types/node@24.19.2)(yaml@2.9.1)
