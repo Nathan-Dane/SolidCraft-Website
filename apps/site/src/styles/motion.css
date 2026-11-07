@@ -1,0 +1,23 @@
+/* blocks rise into place once as they enter the view (scripts/reveal.ts adds .in); without scripts they are simply shown */
+.js .rv {
+	--d: 0ms; /* the stagger, set per block by reveal.ts */
+	opacity: 0;
+	translate: 0 22px;
+	transition:
+		opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+		translate 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+	transition-delay: var(--d);
+
+	&.in {
+		opacity: 1;
+		translate: 0 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.js .rv {
+		opacity: 1;
+		translate: none;
+		transition: none;
+	}
+}

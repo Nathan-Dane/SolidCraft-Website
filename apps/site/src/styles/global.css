@@ -9,3 +9,4 @@
 @import "./backdrop.css" layer(layout);
 @import "./release.css" layer(components);
 @import "./sections.css" layer(layout);
+@import "./motion.css" layer(motion);
