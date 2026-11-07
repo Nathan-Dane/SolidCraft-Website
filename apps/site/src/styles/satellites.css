@@ -1,0 +1,79 @@
+/* the four satellites: icon and label on a node of the field, fixed to the window (the field moves them) and shown only with the field */
+.sat {
+	position: fixed;
+	z-index: 16;
+	transform: translate(-50%, -50%);
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: calc(var(--u) * 0.35);
+	width: calc(var(--u) * 7);
+	height: calc(var(--u) * 7);
+	border-radius: 50%;
+	color: var(--text);
+	font: 400 calc(var(--ut) * 0.9) / 1.2 var(--font-mono);
+	letter-spacing: 0.1em;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+
+	svg {
+		width: calc(var(--ut) * 2.1);
+		height: calc(var(--ut) * 2.1);
+		overflow: visible;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.35;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		color: #8dc2e4;
+
+		.dim {
+			opacity: 0.5;
+		}
+
+		.ac {
+			fill: var(--accent);
+			stroke: none;
+		}
+
+		.core {
+			fill: rgb(81 173 255 / 0.3);
+			stroke: var(--accent);
+		}
+
+		.core-l {
+			stroke: var(--accent);
+			opacity: 0.8;
+		}
+	}
+
+	span {
+		display: block;
+	}
+
+	small {
+		display: block;
+		margin-top: 0.2em;
+		color: var(--cool);
+		font-size: 0.8em;
+		letter-spacing: 0.06em;
+		text-transform: none;
+	}
+}
+
+html[data-field="live"] .sat,
+html[data-field="still"] .sat {
+	display: flex;
+}
+
+html.sats-off .sat {
+	visibility: hidden;
+}
+
+@media (max-width: 720px) {
+	html[data-field] .sat {
+		display: none;
+	}
+}

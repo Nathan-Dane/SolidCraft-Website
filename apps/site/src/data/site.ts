@@ -44,3 +44,18 @@ export const footer = [
 		],
 	},
 ] as const;
+
+/** The four satellites of the hero: each is a node of the field with an icon and a label, and a page of its own. */
+export const satellites = [
+	{ key: "plugins", label: "Plugins", sub: "add-ons", href: "/plugins/", left: 17, top: 36 },
+	{ key: "themes", label: "Themes", sub: "studio", href: "/themes/", left: 83, top: 36 },
+	{
+		key: "solidcore",
+		label: "SolidCore",
+		sub: "kernel",
+		href: "/features/#solidcore",
+		left: 24,
+		top: 78,
+	},
+	{ key: "agents", label: "Agents", sub: "MCP", href: "/features/#agents", left: 76, top: 78 },
+] as const;
