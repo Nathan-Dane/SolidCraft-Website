@@ -1,4 +1,5 @@
 ---
+import BrandSprite from "../components/BrandSprite.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -19,6 +20,7 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
+		<BrandSprite />
 		<slot />
 	</body>
 </html>
