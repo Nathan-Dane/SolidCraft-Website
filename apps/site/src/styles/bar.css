@@ -181,35 +181,71 @@
 			}
 		}
 
+		/* a floating card under the bar, one row per page */
 		.drawer:not([hidden]) {
 			position: absolute;
-			inset: 100% 0 auto 0;
+			top: calc(100% + 4px);
+			left: 12px;
+			right: 12px;
 			display: flex;
 			flex-direction: column;
-			padding: 8px var(--gutter) 16px;
-			background: rgb(16 36 58 / 0.97);
-			box-shadow: 0 1px 0 rgb(120 183 220 / 0.14);
-			font: 400 var(--text-min) var(--font-mono);
-			letter-spacing: 0.14em;
-			text-transform: uppercase;
+			gap: 2px;
+			padding: 8px;
+			border: 1px solid rgb(120 183 220 / 0.2);
+			border-radius: 20px;
+			background: #0d1d2f;
+			box-shadow:
+				0 1px 0 rgb(255 255 255 / 0.05) inset,
+				0 24px 60px rgb(0 0 0 / 0.45);
+			font: 500 17px / 1.2 var(--font-sans);
+			letter-spacing: 0;
+			text-transform: none;
+			transform-origin: top right;
+			animation: drawer-in 0.18s ease-out;
 
 			a {
-				padding: 16px 0;
-				border-bottom: 1px solid rgb(120 183 220 / 0.12);
-				color: var(--cool);
-				text-decoration: none;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin: 0;
+				padding: 15px 16px;
+				border: 0;
+				border-radius: 13px;
+				color: var(--text);
 
-				&:last-child {
-					border-bottom: 0;
+				/* a small chevron at the end of each row */
+				&::after {
+					content: "";
+					width: 7px;
+					height: 7px;
+					border-top: 1.5px solid currentColor;
+					border-right: 1.5px solid currentColor;
+					opacity: 0.4;
+					transform: rotate(45deg);
 				}
 
 				&:hover,
-				&:focus-visible,
+				&:focus-visible {
+					background: rgb(120 183 220 / 0.1);
+				}
+
 				&[aria-current="page"] {
-					color: var(--text);
+					background: rgb(35 121 231 / 0.2);
+					color: #fff;
+
+					&::after {
+						opacity: 0.9;
+					}
 				}
 			}
 		}
+	}
+}
+
+@keyframes drawer-in {
+	from {
+		opacity: 0;
+		transform: translateY(-6px) scale(0.98);
 	}
 }
 
@@ -231,5 +267,9 @@ html.scroll-js .bar::before {
 	.bar .menu-btn span::before,
 	.bar .menu-btn span::after {
 		transition: none;
+	}
+
+	.bar .drawer {
+		animation: none;
 	}
 }
