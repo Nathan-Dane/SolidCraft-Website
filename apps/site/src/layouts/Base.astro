@@ -1,4 +1,5 @@
 ---
+import Backdrop from "../components/Backdrop.astro";
 import Bar from "../components/Bar.astro";
 import BrandSprite from "../components/BrandSprite.astro";
 import "../styles/global.css";
@@ -44,6 +45,7 @@ const data = {
 	<body>
 		<a class="skip" href="#main">Skip to content</a>
 		<BrandSprite />
+		<Backdrop />
 		<Bar />
 		<slot />
 	</body>

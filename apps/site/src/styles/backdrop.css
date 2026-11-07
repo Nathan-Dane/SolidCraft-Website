@@ -1,0 +1,47 @@
+/* the page's fixed backdrop: a soft depth glow and the datum sheet of points and small crosses, faded into the page colour at the top */
+.backdrop {
+	position: fixed;
+	inset: 0;
+	z-index: 0;
+	overflow: hidden;
+	contain: layout paint style;
+	container-type: size;
+	pointer-events: none;
+
+	/* one world unit of the drawing in pixels: the drawing covers the window, centred */
+	--s: max(100cqw / 2560, 100cqh / 1440);
+	--tile: calc(320 * var(--s));
+
+	/* a gradient in the page colour, not a mask: a mask makes the browser redraw the whole backdrop through an offscreen surface */
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0 0 auto 0;
+		height: 12vh;
+		background: linear-gradient(to bottom, var(--ink-900), rgb(16 36 58 / 0));
+	}
+}
+
+.datum-glow {
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(
+		ellipse 80% 80% at 50% 40%,
+		rgb(27 61 94 / 0.5) 0%,
+		rgb(16 36 58 / 0) 60%,
+		rgb(5 14 26 / 0.55) 100%
+	);
+}
+
+/* one tile taller than the window, so it can move by a whole tile and wrap without a seam */
+.datum {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: calc(100% + var(--tile));
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 320'%3E%3Cg fill='%237fb0d4' opacity='0.2'%3E%3Ccircle cx='0' cy='0' r='1.15'/%3E%3Ccircle cx='80' cy='0' r='1.15'/%3E%3Ccircle cx='160' cy='0' r='1.15'/%3E%3Ccircle cx='240' cy='0' r='1.15'/%3E%3Ccircle cx='320' cy='0' r='1.15'/%3E%3Ccircle cx='0' cy='80' r='1.15'/%3E%3Ccircle cx='80' cy='80' r='1.15'/%3E%3Ccircle cx='160' cy='80' r='1.15'/%3E%3Ccircle cx='240' cy='80' r='1.15'/%3E%3Ccircle cx='320' cy='80' r='1.15'/%3E%3Ccircle cx='0' cy='160' r='1.15'/%3E%3Ccircle cx='80' cy='160' r='1.15'/%3E%3Ccircle cx='160' cy='160' r='1.15'/%3E%3Ccircle cx='240' cy='160' r='1.15'/%3E%3Ccircle cx='320' cy='160' r='1.15'/%3E%3Ccircle cx='0' cy='240' r='1.15'/%3E%3Ccircle cx='80' cy='240' r='1.15'/%3E%3Ccircle cx='160' cy='240' r='1.15'/%3E%3Ccircle cx='240' cy='240' r='1.15'/%3E%3Ccircle cx='320' cy='240' r='1.15'/%3E%3Ccircle cx='0' cy='320' r='1.15'/%3E%3Ccircle cx='80' cy='320' r='1.15'/%3E%3Ccircle cx='160' cy='320' r='1.15'/%3E%3Ccircle cx='240' cy='320' r='1.15'/%3E%3Ccircle cx='320' cy='320' r='1.15'/%3E%3C/g%3E%3Cpath d='M-5.5 0H5.5M0 -5.5V5.5M314.5 0H325.5M320 -5.5V5.5M-5.5 320H5.5M0 314.5V325.5M314.5 320H325.5M320 314.5V325.5' fill='none' stroke='%237fb0d4' stroke-width='0.9' stroke-linecap='round' opacity='0.3'/%3E%3C/svg%3E");
+	background-size: var(--tile) var(--tile);
+	background-position: calc((100cqw - 2560 * var(--s)) / 2) calc((100cqh - 1440 * var(--s)) / 2);
+	will-change: transform;
+}
