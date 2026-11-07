@@ -10,4 +10,5 @@
 @import "./release.css" layer(components);
 @import "./sections.css" layer(layout);
 @import "./footer.css" layer(components);
+@import "./pages.css" layer(layout);
 @import "./motion.css" layer(motion);
