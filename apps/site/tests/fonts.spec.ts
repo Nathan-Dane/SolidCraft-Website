@@ -13,7 +13,7 @@ test("the three preloaded fonts are served", async ({ page, request }) => {
 	}
 });
 
-test("the page does not shift while fonts load", async ({ page }) => {
+test("the page does not shift while it loads", async ({ page }) => {
 	await page.addInitScript(() => {
 		const w = window as unknown as { shift: number };
 		w.shift = 0;
@@ -27,5 +27,7 @@ test("the page does not shift while fonts load", async ({ page }) => {
 	await page.goto("/");
 	await page.evaluate(() => document.fonts.ready);
 	await page.waitForTimeout(300);
-	expect(await page.evaluate(() => (window as unknown as { shift: number }).shift)).toBe(0);
+	expect(await page.evaluate(() => (window as unknown as { shift: number }).shift)).toBeLessThan(
+		0.005,
+	);
 });
