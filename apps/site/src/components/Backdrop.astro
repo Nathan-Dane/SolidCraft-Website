@@ -1,4 +1,6 @@
 ---
+import { url } from "../lib/url";
+
 interface Props {
 	/** The page has the hero: it gets the field's canvas and the poster behind it. */
 	field?: boolean;
@@ -14,7 +16,7 @@ const { field = false } = Astro.props;
 	{
 		field && (
 			<div class="poster">
-				<img src="/field/poster.svg" alt="" width="2560" height="1440" loading="lazy" decoding="async" fetchpriority="low" />
+				<img src={url("/field/poster.svg")} alt="" width="2560" height="1440" loading="lazy" decoding="async" fetchpriority="low" />
 			</div>
 		)
 	}
