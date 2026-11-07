@@ -2,11 +2,23 @@
 import BrandSprite from "../components/BrandSprite.astro";
 import "../styles/global.css";
 
+import { site } from "../data/site";
+
 interface Props {
 	title: string;
+	description?: string;
 }
 
-const { title } = Astro.props;
+const { title, description = site.description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const data = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	name: site.name,
+	url: site.url,
+	description,
+	publisher: { "@type": "Organization", name: "Tangency Labs" },
+};
 ---
 
 <!doctype html>
@@ -17,9 +29,19 @@ const { title } = Astro.props;
 		<link rel="preload" href="/fonts/barlow-600.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="preload" href="/fonts/plex-sans-var.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="preload" href="/fonts/plex-mono-400.woff2" as="font" type="font/woff2" crossorigin />
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#10243a" />
+		<link rel="canonical" href={canonical} />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content={site.name} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<script type="application/ld+json" set:html={JSON.stringify(data)} />
 		<title>{title}</title>
 	</head>
 	<body>
+		<a class="skip" href="#main">Skip to content</a>
 		<BrandSprite />
 		<slot />
 	</body>
