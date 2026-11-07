@@ -1,0 +1,32 @@
+---
+import { site } from "../data/site";
+import Logo from "./Logo.astro";
+
+const download = `${site.releases}/latest/download/solidcraft-macos-universal.dmg`;
+---
+
+<section class="hero" id="top" aria-label="SolidCraft">
+	<a class="node-logo" id="node" href="/" aria-label="SolidCraft">
+		<Logo />
+	</a>
+	<div class="titleblock">
+		<h1>SolidCraft</h1>
+		<div class="by">by Tangency Labs</div>
+		<p class="tag">Open-source parametric CAD, built in Rust.</p>
+	</div>
+	<div class="pills">
+		<a class="pill primary" id="dl" href={download}>
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5 12 15.5l5-5M5 20h14"></path></svg>
+			Download for macOS
+		</a>
+		<a class="pill ghost" id="web" href={site.app}>
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"></path></svg>
+			Try in browser
+		</a>
+	</div>
+	<slot />
+	<a class="cue" href="#agents" aria-label="Scroll to the next section">
+		<span>Scroll</span>
+		<i></i>
+	</a>
+</section>
