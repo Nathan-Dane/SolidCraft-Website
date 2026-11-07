@@ -21,3 +21,23 @@
 		transition: none;
 	}
 }
+
+/* navigating between pages cross-fades the content while the bar and backdrop stay where they are (browsers without support just navigate) */
+@media (prefers-reduced-motion: no-preference) {
+	@view-transition {
+		navigation: auto;
+	}
+}
+
+.bar {
+	view-transition-name: bar;
+}
+
+.backdrop {
+	view-transition-name: backdrop;
+}
+
+::view-transition-group(bar),
+::view-transition-group(backdrop) {
+	animation: none;
+}
