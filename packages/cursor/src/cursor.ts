@@ -342,7 +342,11 @@ export function createCursor(opts: CursorOptions): Cursor {
 		const d = edgeDistance(g, P.x, P.y);
 		// an element covered by something else (the bar over a scrolled card) cannot be reached through it
 		if (c.kind === "el" && d < 0 && under && !c.item.el.contains(under)) return;
-		if (d < bestD) {
+		// an element the pointer is inside is never beaten by a node behind it, however much deeper the pointer is in that node
+		const inside = c.kind === "el" && d < 0;
+		const held = bestC?.kind === "el" && bestD < 0;
+		if (held && !inside) return;
+		if (d < bestD || (inside && !held)) {
 			bestD = d;
 			best = g;
 			bestC = c;
