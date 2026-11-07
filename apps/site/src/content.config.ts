@@ -30,4 +30,16 @@ const home = defineCollection({
 	}),
 });
 
-export const collections = { home };
+const pages = defineCollection({
+	loader: glob({ pattern: "*.md", base: "./src/content/pages" }),
+	schema: z.object({
+		title: z.string(),
+		eyebrow: z.string(),
+		lede: z.string(),
+		description: z.string(),
+		stage: z.object({ kind: z.string(), label: z.string(), text: z.string() }).optional(),
+		cards: z.array(z.object({ title: z.string(), text: z.string() })).optional(),
+	}),
+});
+
+export const collections = { home, pages };
