@@ -1,0 +1,44 @@
+:root {
+	/* colour */
+	--ink-950: #081422;
+	--ink-900: #10243a;
+	--ink-850: #0c1c2e;
+	--text: #eef4fb;
+	--text-strong: #f4f8fc;
+	--text-soft: #dbe9f5;
+	--text-mid: #c4d9ea;
+	--muted: #a9c0d3;
+	--cool: #83a9c3;
+	--line: #78b7dc;
+	--line-dim: #426d8d;
+	--border: #2f5878;
+	--accent: #51adff;
+	--action-top: #4aa3ff;
+	--action: #2379e7;
+	--action-bottom: #1b5fc4;
+	--action-border: #459fff;
+	--warn: #e9b64f;
+	--focus: #b9e4fa;
+
+	/* type */
+	--font-display: "Barlow", "Barlow Fallback", system-ui, sans-serif;
+	--font-sans: "Plex Sans", "Plex Sans Fallback", system-ui, sans-serif;
+	--font-mono: "Plex Mono", "Plex Mono Fallback", ui-monospace, monospace;
+	--text-min: 12.5px;
+
+	/* scale: --u sizes the hero and scales with the window; --ut sizes text and controls and never gets smaller than --text-min */
+	--u: min(1vw, 1.5vh);
+	--ut: max(var(--u), var(--text-min));
+
+	/* layout */
+	--bar-height: 84px;
+	--gutter: clamp(20px, 4vw, 56px);
+	--radius-pill: 999px;
+}
+
+@media (max-width: 720px) {
+	:root {
+		--u: min(2.35vw, 1.3vh);
+		--ut: max(var(--u), var(--text-min));
+	}
+}

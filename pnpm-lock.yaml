@@ -205,7 +205,11 @@ importers:
 
   packages/frame: {}
 
-  packages/tokens: {}
+  packages/tokens:
+    devDependencies:
+      '@types/node':
+        specifier: ^24.19.2
+        version: 24.19.2
 
 packages:
 
