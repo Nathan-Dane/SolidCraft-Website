@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Hero from "../components/Hero.astro";
 import HomeSection from "../components/HomeSection.astro";
 import ReleaseLine from "../components/ReleaseLine.tsx";
+import Satellites from "../components/Satellites.astro";
 import Base from "../layouts/Base.astro";
 
 const sections = (await getCollection("home")).sort((a, b) => a.data.order - b.data.order);
@@ -10,6 +11,7 @@ const sections = (await getCollection("home")).sort((a, b) => a.data.order - b.d
 
 <Base title="SolidCraft — open-source parametric CAD, built in Rust" expect="top-end">
 	<main id="main" class="page">
+		<Satellites />
 		<Hero>
 			<ReleaseLine client:idle />
 		</Hero>
