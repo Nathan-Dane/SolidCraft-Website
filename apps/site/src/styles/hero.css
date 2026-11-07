@@ -11,9 +11,9 @@
 		height: 100svh;
 	}
 
-	/* the content is centred in the viewport: auto margins (not justify-content) keep a too-tall stack from running off the top */
-	> :nth-last-child(2) {
-		margin-bottom: auto;
+	/* the island that holds the release line takes no box of its own, before and after it is hydrated, so nothing moves */
+	astro-island {
+		display: contents;
 	}
 }
 

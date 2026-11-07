@@ -1,10 +1,13 @@
 ---
 import Hero from "../components/Hero.astro";
+import ReleaseLine from "../components/ReleaseLine.tsx";
 import Base from "../layouts/Base.astro";
 ---
 
 <Base title="SolidCraft — open-source parametric CAD, built in Rust">
 	<main id="main" class="page">
-		<Hero />
+		<Hero>
+			<ReleaseLine client:idle />
+		</Hero>
 	</main>
 </Base>

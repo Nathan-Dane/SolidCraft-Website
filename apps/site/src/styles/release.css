@@ -1,0 +1,235 @@
+.statusblock {
+	position: relative;
+	margin-top: calc(var(--ut) * 2);
+	margin-bottom: auto; /* the hero's content is centred in the viewport: auto margins (not justify-content) keep a too-tall stack from running off the top */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: calc(var(--ut) * 1.3);
+}
+
+.meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: calc(var(--ut) * 0.6) calc(var(--ut) * 1.8);
+	justify-content: center;
+	align-items: center;
+	color: var(--cool);
+	font: 400 calc(var(--ut) * 0.92) var(--font-mono);
+	letter-spacing: 0.09em;
+
+	.ver {
+		display: inline-flex;
+		align-items: center;
+		border-bottom: 1px solid transparent;
+		color: var(--text);
+		text-decoration: none;
+		transition: border-color 0.2s;
+
+		&:hover,
+		&:focus-visible {
+			border-color: var(--line);
+		}
+	}
+
+	/* room for the version once it is known, so the row does not move when the release list arrives */
+	.ver span {
+		min-width: 18ch;
+	}
+
+	.dot {
+		display: inline-block;
+		width: 0.55em;
+		height: 0.55em;
+		margin-right: 0.75em;
+		border-radius: 50%;
+		background: var(--accent);
+		box-shadow: 0 0 10px rgb(81 173 255 / 0.9);
+		transition:
+			background 0.25s,
+			box-shadow 0.25s;
+	}
+
+	&[data-ch="pre"] .dot {
+		background: var(--warn);
+		box-shadow: 0 0 10px rgb(233 182 79 / 0.85);
+	}
+}
+
+/* "More downloads": a quiet text control that opens a small panel with the platforms */
+.more {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35em;
+	padding: 0;
+	border: 0;
+	border-bottom: 1px solid transparent;
+	background: none;
+	color: var(--cool);
+	font: inherit;
+	letter-spacing: inherit;
+	cursor: pointer;
+	transition:
+		color 0.2s,
+		border-color 0.2s;
+
+	svg {
+		width: 1.2em;
+		height: 1.2em;
+		transition: transform 0.25s;
+	}
+
+	&:hover,
+	&:focus-visible,
+	&[aria-expanded="true"] {
+		color: var(--text);
+		border-color: var(--line-dim);
+	}
+
+	&[aria-expanded="true"] svg {
+		transform: rotate(180deg);
+	}
+}
+
+.more-menu {
+	position: absolute;
+	z-index: 30;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	width: max-content;
+	max-width: 92vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: calc(var(--ut) * 0.9);
+	margin-top: calc(var(--ut) * 0.9);
+	padding: calc(var(--ut) * 1.3) calc(var(--ut) * 1.5);
+	border: 1px solid var(--border);
+	border-radius: calc(var(--ut) * 1.6);
+	background: rgb(12 28 46 / 0.96);
+	box-shadow: 0 calc(var(--ut) * 1.4) calc(var(--ut) * 3.5) rgb(0 0 0 / 0.4);
+
+	&[hidden] {
+		display: none;
+	}
+}
+
+.mm-label {
+	color: var(--cool);
+	font: 400 calc(var(--ut) * 0.8) var(--font-mono);
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	opacity: 0.8;
+}
+
+.switch {
+	display: inline-flex;
+	align-items: center;
+	gap: calc(var(--ut) * 0.7);
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--cool);
+	font: 400 calc(var(--ut) * 0.92) var(--font-mono);
+	letter-spacing: 0.09em;
+	cursor: pointer;
+	transition: color 0.2s;
+
+	&:hover {
+		color: var(--text);
+	}
+
+	.track {
+		position: relative;
+		width: calc(var(--ut) * 2.5);
+		height: calc(var(--ut) * 1.4);
+		border: 1px solid #335f80;
+		border-radius: var(--radius-pill);
+		background: rgb(120 183 220 / 0.16);
+		transition:
+			background 0.25s,
+			border-color 0.25s;
+
+		i {
+			position: absolute;
+			top: 50%;
+			left: calc(var(--ut) * 0.2);
+			width: calc(var(--ut) * 0.86);
+			height: calc(var(--ut) * 0.86);
+			margin-top: calc(var(--ut) * -0.43);
+			border-radius: 50%;
+			background: var(--cool);
+			transition:
+				transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1),
+				background 0.25s;
+		}
+	}
+
+	&[aria-checked="true"] {
+		color: #f1d596;
+
+		.track {
+			border-color: #b98d38;
+			background: rgb(233 182 79 / 0.22);
+
+			i {
+				transform: translateX(calc(var(--ut) * 1.1));
+				background: var(--warn);
+			}
+		}
+	}
+}
+
+.plats {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: calc(var(--ut) * 0.7);
+
+	a {
+		display: inline-flex;
+		align-items: center;
+		gap: calc(var(--ut) * 0.55);
+		height: calc(var(--ut) * 2.9);
+		padding: 0 calc(var(--ut) * 1.35);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-pill);
+		background: rgb(16 36 58 / 0.5);
+		color: var(--text-mid);
+		font: 500 calc(var(--ut) * 1.02) var(--font-sans);
+		letter-spacing: 0.01em;
+		text-decoration: none;
+		transition:
+			border-color 0.2s,
+			background 0.2s,
+			color 0.2s,
+			transform 0.2s;
+
+		svg {
+			width: calc(var(--ut) * 1.15);
+			height: calc(var(--ut) * 1.15);
+			opacity: 0.75;
+		}
+
+		&:hover,
+		&:focus-visible {
+			border-color: var(--line);
+			background: rgb(31 65 96 / 0.6);
+			color: #fff;
+			transform: translateY(-1px);
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.meta .ver,
+	.more,
+	.more svg,
+	.switch,
+	.switch .track,
+	.switch .track i,
+	.plats a {
+		transition: none;
+	}
+}
