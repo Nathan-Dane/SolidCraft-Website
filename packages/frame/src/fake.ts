@@ -14,6 +14,9 @@ export function fakeEnv() {
 		cancel(id) {
 			queue.delete(id);
 		},
+		now() {
+			return now;
+		},
 	};
 	return {
 		env,
