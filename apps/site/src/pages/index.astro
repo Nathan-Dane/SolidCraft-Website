@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import Footer from "../components/Footer.astro";
 import Hero from "../components/Hero.astro";
 import HomeSection from "../components/HomeSection.astro";
 import ReleaseLine from "../components/ReleaseLine.tsx";
@@ -15,4 +16,5 @@ const sections = (await getCollection("home")).sort((a, b) => a.data.order - b.d
 		</Hero>
 		{sections.map((entry) => <HomeSection entry={entry} />)}
 	</main>
+	<Footer />
 </Base>

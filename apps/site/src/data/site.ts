@@ -17,3 +17,31 @@ export const nav = [
 	{ label: "Docs", href: site.docs },
 	{ label: "Showcase", href: "/#showcase" },
 ] as const;
+
+export const footer = [
+	{
+		title: "Product",
+		links: [
+			{ label: "Agents", href: "/#agents" },
+			{ label: "Plugins", href: "/#modular" },
+			{ label: "Customise", href: "/#panels" },
+			{ label: "Technology", href: "/#kernel" },
+		],
+	},
+	{
+		title: "Learn & build",
+		links: [
+			{ label: "Documentation", href: site.docs },
+			{ label: "Showcase", href: "/#showcase" },
+			{ label: "Contribute", href: `${site.github}/blob/main/CONTRIBUTING.md` },
+		],
+	},
+	{
+		title: "Project",
+		links: [
+			{ label: "GitHub", href: site.github },
+			{ label: "Discord", href: site.discord },
+			{ label: "Issues", href: `${site.github}/issues` },
+		],
+	},
+] as const;
