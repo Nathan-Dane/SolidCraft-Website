@@ -1,0 +1,19 @@
+---
+import { footer } from "../data/site";
+---
+
+<footer class="foot">
+	<div class="wrap">
+		<div class="cols">
+			{
+				footer.map((column) => (
+					<div>
+						<h2>{column.title}</h2>
+						{column.links.map((link) => <a href={link.href}>{link.label}</a>)}
+					</div>
+				))
+			}
+		</div>
+		<p class="indep">Independent open-source software. Autodesk and NVIDIA do not endorse these projects. © Tangency Labs</p>
+	</div>
+</footer>
