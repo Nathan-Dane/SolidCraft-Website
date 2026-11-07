@@ -30,3 +30,22 @@ test("the icons line up with the page margin", async ({ page }) => {
 	const gutter = logo?.x ?? 0;
 	expect(Math.abs(390 - ((icon?.x ?? 0) + (icon?.width ?? 0)) - gutter)).toBeLessThan(1.5);
 });
+
+test("the bar turns solid as the page scrolls", async ({ page }) => {
+	await page.setViewportSize({ width: 1280, height: 800 });
+	await page.goto("/");
+	await page.addStyleTag({ content: "main { min-height: 400vh; }" });
+	const solid = async () => {
+		await page.evaluate(
+			() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))),
+		);
+		return page.evaluate(() =>
+			Number(getComputedStyle(document.querySelector(".bar") as Element, "::before").opacity),
+		);
+	};
+	expect(await solid()).toBe(0);
+	await page.evaluate(() => window.scrollTo({ top: 400, behavior: "instant" }));
+	expect(await solid()).toBe(0);
+	await page.evaluate(() => window.scrollTo({ top: 1000, behavior: "instant" }));
+	expect(await solid()).toBeCloseTo(1, 1);
+});
