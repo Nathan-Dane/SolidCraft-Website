@@ -14,6 +14,22 @@
 		rgb(16 36 58 / 0) 100%
 	);
 
+	/* the solid state fades in as the hero leaves: an opacity animation tied to the scroll position, run by the compositor */
+	&::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: rgb(16 36 58 / 0.95);
+		box-shadow: 0 1px 0 rgb(120 183 220 / 0.14);
+		opacity: 0;
+		animation-name: bar-solid;
+		animation-timing-function: linear;
+		animation-fill-mode: both;
+		animation-timeline: scroll(root block);
+		animation-range: 55vh 70vh;
+	}
+
 	.mini {
 		display: inline-flex;
 		align-items: center;
@@ -85,6 +101,12 @@
 		nav {
 			display: none;
 		}
+	}
+}
+
+@keyframes bar-solid {
+	to {
+		opacity: 1;
 	}
 }
 
