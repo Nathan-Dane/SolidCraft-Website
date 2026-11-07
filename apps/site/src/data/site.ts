@@ -11,28 +11,27 @@ export const site = {
 } as const;
 
 export const nav = [
-	{ label: "Features", href: "/#agents" },
-	{ label: "Plugins", href: "/#modular" },
-	{ label: "Themes", href: "/#themes" },
+	{ label: "Features", href: "/features/" },
+	{ label: "Plugins", href: "/plugins/" },
+	{ label: "Themes", href: "/themes/" },
 	{ label: "Docs", href: site.docs },
-	{ label: "Showcase", href: "/#showcase" },
+	{ label: "Showcase", href: "/showcase/" },
 ] as const;
 
 export const footer = [
 	{
 		title: "Product",
 		links: [
-			{ label: "Agents", href: "/#agents" },
-			{ label: "Plugins", href: "/#modular" },
-			{ label: "Customise", href: "/#panels" },
-			{ label: "Technology", href: "/#kernel" },
+			{ label: "Features", href: "/features/" },
+			{ label: "Plugins", href: "/plugins/" },
+			{ label: "Themes", href: "/themes/" },
+			{ label: "Showcase", href: "/showcase/" },
 		],
 	},
 	{
 		title: "Learn & build",
 		links: [
 			{ label: "Documentation", href: site.docs },
-			{ label: "Showcase", href: "/#showcase" },
 			{ label: "Contribute", href: `${site.github}/blob/main/CONTRIBUTING.md` },
 		],
 	},
