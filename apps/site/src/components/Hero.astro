@@ -1,12 +1,13 @@
 ---
 import { site } from "../data/site";
+import { url } from "../lib/url";
 import Logo from "./Logo.astro";
 
 const download = `${site.releases}/latest/download/solidcraft-macos-universal.dmg`;
 ---
 
 <section class="hero" id="top" aria-label="SolidCraft">
-	<a class="node-logo" id="node" href="/" aria-label="SolidCraft" data-field-anchor="logo">
+	<a class="node-logo" id="node" href={url("/")} aria-label="SolidCraft" data-field-anchor="logo">
 		<Logo />
 	</a>
 	<div class="titleblock" data-quiet>

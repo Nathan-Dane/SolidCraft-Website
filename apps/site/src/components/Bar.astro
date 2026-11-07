@@ -1,12 +1,13 @@
 ---
 import { nav, site } from "../data/site";
+import { url } from "../lib/url";
 import Logo from "./Logo.astro";
 
 const here = Astro.url.pathname;
 ---
 
 <header class="bar">
-	<a class="mini" href="/" aria-label="SolidCraft home" data-focus>
+	<a class="mini" href={url("/")} aria-label="SolidCraft home" data-focus>
 		<Logo />
 		<span>SolidCraft</span>
 	</a>

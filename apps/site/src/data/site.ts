@@ -1,3 +1,5 @@
+import { url } from "../lib/url";
+
 export const site = {
 	name: "SolidCraft",
 	url: "https://solidcraft.io",
@@ -11,21 +13,21 @@ export const site = {
 } as const;
 
 export const nav = [
-	{ label: "Features", href: "/features/" },
-	{ label: "Plugins", href: "/plugins/" },
-	{ label: "Themes", href: "/themes/" },
+	{ label: "Features", href: url("/features/") },
+	{ label: "Plugins", href: url("/plugins/") },
+	{ label: "Themes", href: url("/themes/") },
 	{ label: "Docs", href: site.docs },
-	{ label: "Showcase", href: "/showcase/" },
+	{ label: "Showcase", href: url("/showcase/") },
 ] as const;
 
 export const footer = [
 	{
 		title: "Product",
 		links: [
-			{ label: "Features", href: "/features/" },
-			{ label: "Plugins", href: "/plugins/" },
-			{ label: "Themes", href: "/themes/" },
-			{ label: "Showcase", href: "/showcase/" },
+			{ label: "Features", href: url("/features/") },
+			{ label: "Plugins", href: url("/plugins/") },
+			{ label: "Themes", href: url("/themes/") },
+			{ label: "Showcase", href: url("/showcase/") },
 		],
 	},
 	{
@@ -47,15 +49,15 @@ export const footer = [
 
 /** The four satellites of the hero: each is a node of the field with an icon and a label, and a page of its own. */
 export const satellites = [
-	{ key: "plugins", label: "Plugins", sub: "add-ons", href: "/plugins/", left: 17, top: 36 },
-	{ key: "themes", label: "Themes", sub: "studio", href: "/themes/", left: 83, top: 36 },
+	{ key: "plugins", label: "Plugins", sub: "add-ons", href: url("/plugins/"), left: 17, top: 36 },
+	{ key: "themes", label: "Themes", sub: "studio", href: url("/themes/"), left: 83, top: 36 },
 	{
 		key: "solidcore",
 		label: "SolidCore",
 		sub: "kernel",
-		href: "/features/#solidcore",
+		href: url("/features/#solidcore"),
 		left: 24,
 		top: 78,
 	},
-	{ key: "agents", label: "Agents", sub: "MCP", href: "/features/#agents", left: 76, top: 78 },
+	{ key: "agents", label: "Agents", sub: "MCP", href: url("/features/#agents"), left: 76, top: 78 },
 ] as const;
